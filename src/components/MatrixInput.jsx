@@ -1,4 +1,6 @@
 export default function MatrixInput({ matrix, onChange }) {
+    const n = matrix.length
+
     function updateCell(row, col, value) {
         const next = matrix.map((r) => [...r])
         next[row][col] = value
@@ -6,7 +8,10 @@ export default function MatrixInput({ matrix, onChange }) {
     }
 
     return (
-        <div className="inline-grid grid-cols-2 gap-2 p-3 rounded-lg border border-ink-700 bg-ink-900 font-mono">
+        <div
+            className={`inline-grid gap-2 p-3 rounded-lg border border-ink-700 bg-ink-900 font-mono ${n === 3 ? 'grid-cols-3' : 'grid-cols-2'
+                }`}
+        >
             {matrix.map((row, r) =>
                 row.map((val, c) => (
                     <input
