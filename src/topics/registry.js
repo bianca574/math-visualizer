@@ -6,6 +6,7 @@ import Determinants from './Determinants'
 import Signature from './Signature'
 import GaussReduction from './GaussReduction'
 import ConicsQuadrics from './ConicsQuadrics'
+import EpsilonN from './EpsilonN'
 
 export const topicComponents = {
   'matrix-ops': MatrixOps,
@@ -16,4 +17,5 @@ export const topicComponents = {
   signature: Signature,
   'gauss-reduction': GaussReduction,
   'conics-quadrics': ConicsQuadrics,
+  'epsilon-n': EpsilonN,
 }

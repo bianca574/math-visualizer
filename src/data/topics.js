@@ -33,7 +33,7 @@ export const categories = [
       id: 'sequences-series',
       label: 'Suites et séries',
       topics: [
-        { id: 'epsilon-n', label: 'Convergence (définition ε-N)', status: 'planned' },
+        { id: 'epsilon-n', label: 'Convergence (définition ε-N)', status: 'ready' },
         { id: 'function-series', label: 'Séries de fonctions', status: 'planned' },
         { id: 'power-series', label: 'Séries entières', status: 'planned' },
       ],

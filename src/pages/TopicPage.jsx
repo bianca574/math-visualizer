@@ -24,7 +24,7 @@ export default function TopicPage() {
     return (
         <div className="max-w-5xl mx-auto">
             <nav className="text-xs text-ink-500 mb-4 font-mono">
-                <Link to="/" className="hover:text-white">accueil</Link>
+                <Link to="/" className="hover:text-white">Accueil</Link>
                 <span className="mx-1.5">/</span>
                 <span>{category.label}</span>
                 <span className="mx-1.5">/</span>
