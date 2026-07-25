@@ -7,6 +7,8 @@ import Signature from './Signature'
 import GaussReduction from './GaussReduction'
 import ConicsQuadrics from './ConicsQuadrics'
 import EpsilonN from './EpsilonN'
+import PowerSeries from './PowerSeries'
+import FunctionSeries from './FunctionSeries'
 
 export const topicComponents = {
   'matrix-ops': MatrixOps,
@@ -18,4 +20,6 @@ export const topicComponents = {
   'gauss-reduction': GaussReduction,
   'conics-quadrics': ConicsQuadrics,
   'epsilon-n': EpsilonN,
+  'power-series': PowerSeries,
+  'function-series': FunctionSeries,
 }
