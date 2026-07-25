@@ -9,6 +9,9 @@ import ConicsQuadrics from './ConicsQuadrics'
 import EpsilonN from './EpsilonN'
 import PowerSeries from './PowerSeries'
 import FunctionSeries from './FunctionSeries'
+import FormesLineaires from './LinearForms'
+import DotProductProjection from './DotProductProjection'
+import SymmetricEndomorphisms from './SymmetricEndomorphisms'
 
 export const topicComponents = {
   'matrix-ops': MatrixOps,
@@ -22,4 +25,7 @@ export const topicComponents = {
   'epsilon-n': EpsilonN,
   'power-series': PowerSeries,
   'function-series': FunctionSeries,
+  'formes-lineaires': FormesLineaires,
+  'dot-product-projection': DotProductProjection,
+  'symmetric-endomorphisms': SymmetricEndomorphisms,
 }
