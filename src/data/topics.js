@@ -17,7 +17,7 @@ export const categories = [
       topics: [
         { id: 'dot-product-projection', label: 'Produit scalaire et projection', status: 'ready' },
         { id: 'symmetric-endomorphisms', label: 'Endomorphismes symétriques', status: 'ready' },
-        { id: 'isometries', label: 'Isométries en dimension 2 et 3', status: 'planned' },
+        { id: 'isometries', label: 'Isométries en dimension 2 et 3', status: 'ready' },
       ],
     },
     {

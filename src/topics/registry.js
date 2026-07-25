@@ -12,6 +12,7 @@ import FunctionSeries from './FunctionSeries'
 import FormesLineaires from './LinearForms'
 import DotProductProjection from './DotProductProjection'
 import SymmetricEndomorphisms from './SymmetricEndomorphisms'
+import Isometries from './Isometries'
 
 export const topicComponents = {
   'matrix-ops': MatrixOps,
@@ -28,4 +29,5 @@ export const topicComponents = {
   'formes-lineaires': FormesLineaires,
   'dot-product-projection': DotProductProjection,
   'symmetric-endomorphisms': SymmetricEndomorphisms,
+  isometries: Isometries,
 }
