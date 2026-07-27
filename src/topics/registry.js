@@ -13,6 +13,9 @@ import FormesLineaires from './LinearForms'
 import DotProductProjection from './DotProductProjection'
 import SymmetricEndomorphisms from './SymmetricEndomorphisms'
 import Isometries from './Isometries'
+import ParametricIntegral from './ParametricIntegral'
+import MultipleIntegrals from './MultipleIntegrals'
+import CriticalPoints from './CriticalPoints'
 
 export const topicComponents = {
   'matrix-ops': MatrixOps,
@@ -30,4 +33,7 @@ export const topicComponents = {
   'dot-product-projection': DotProductProjection,
   'symmetric-endomorphisms': SymmetricEndomorphisms,
   isometries: Isometries,
+  'parametric-integrals': ParametricIntegral,
+  'multiple-integrals': MultipleIntegrals,
+  'critical-points': CriticalPoints,
 }

@@ -50,9 +50,9 @@ export const categories = [
       id: 'multivariable-analysis',
       label: 'Analyse à plusieurs variables',
       topics: [
-        { id: 'parametric-integrals', label: 'Intégrales dépendant d\'un paramètre', status: 'planned' },
-        { id: 'multiple-integrals', label: 'Intégrales multiples', status: 'planned' },
-        { id: 'critical-points', label: 'Points critiques (plusieurs variables)', status: 'planned' },
+        { id: 'parametric-integrals', label: 'Intégrales dépendant d\'un paramètre', status: 'ready' },
+        { id: 'multiple-integrals', label: 'Intégrales multiples', status: 'ready' },
+        { id: 'critical-points', label: 'Points critiques (plusieurs variables)', status: 'ready' },
       ],
     },
     {
