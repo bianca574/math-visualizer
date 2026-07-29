@@ -2,12 +2,17 @@ import { useState } from 'react'
 import CoordinatePlane from '../components/CoordinatePlane'
 import PlaneVector from '../components/PlaneVector'
 import { dot, norm, projectOnto } from '../lib/projection'
+import { useLanguage } from '../context/LanguageContext'
+import { topicStrings } from '../lib/topicStrings'
 
 export default function DotProductProjection() {
     const [ux, setUx] = useState('3')
     const [uy, setUy] = useState('1')
     const [vx, setVx] = useState('1')
     const [vy, setVy] = useState('2.5')
+
+    const { lang } = useLanguage()
+    const str = topicStrings['dot-product-projection'][lang]
 
     const u = { x: parseFloat(ux) || 0, y: parseFloat(uy) || 0 }
     const v = { x: parseFloat(vx) || 0, y: parseFloat(vy) || 0 }
@@ -22,14 +27,14 @@ export default function DotProductProjection() {
     return (
         <div className="flex flex-col md:flex-row gap-6 items-start">
             <div className="flex flex-col gap-3 w-full max-w-xs">
-                <p className="font-mono text-xs text-ink-500">Déplace u et v :</p>
+                <p className="font-mono text-xs text-ink-500">{str.moveLabel}</p>
                 <div className="grid grid-cols-2 gap-3 rounded-lg border border-ink-700 bg-ink-900 p-3">
                     {[['ux', ux, setUx], ['uy', uy, setUy], ['vx', vx, setVx], ['vy', vy, setVy]].map(([label, val, setter]) => (
                         <label key={label} className="flex items-center gap-2 text-xs font-mono text-ink-500">
                             <span>{label}</span>
                             <input
                                 type="number" step="0.1" value={val} onChange={(e) => setter(e.target.value)}
-                                className="w-14 text-center rounded-md border border-ink-700 bg-ink-800 py-1 text-[#e8ebf0] focus:border-amber-accent outline-none"
+                                className="w-14 text-center rounded-md border border-ink-700 bg-ink-800 py-1 text-text-primary focus:border-amber-accent outline-none"
                             />
                         </label>
                     ))}
@@ -41,10 +46,7 @@ export default function DotProductProjection() {
                     <div>angle(u,v) = {angleDeg !== null ? `${angleDeg.toFixed(1)}°` : '—'}</div>
                     <div>proj_u(v) = ({p.x.toFixed(2)}, {p.y.toFixed(2)})</div>
                 </div>
-                <p className="text-xs text-ink-500 leading-relaxed">
-                    Le segment vert relie v à sa projection : il est toujours perpendiculaire à u.
-                    ⟨u,v⟩ = 0 (u et v orthogonaux) exactement quand la projection s'annule.
-                </p>
+                <p className="text-xs text-ink-500 leading-relaxed">{str.help}</p>
             </div>
 
             <CoordinatePlane width={420} height={420}>

@@ -4,12 +4,17 @@ import Slider from '../components/Slider'
 import { InlineMath } from '../components/Math'
 import { multipleIntegralPresets, integrate2D } from '../lib/multipleIntegral'
 import { buildSurfaceGeometry } from '../lib/surfaceMesh'
+import { useLanguage } from '../context/LanguageContext'
+import { topicStrings } from '../lib/topicStrings'
 
 export default function MultipleIntegrals() {
     const [presetId, setPresetId] = useState(multipleIntegralPresets[0].id)
     const [n, setN] = useState(6)
     const preset = multipleIntegralPresets.find((p) => p.id === presetId)
     const [xMin, xMax, yMin, yMax] = preset.domain
+
+    const { lang } = useLanguage()
+    const str = topicStrings['multiple-integrals'][lang]
 
     const referenceValue = integrate2D(preset.fn, xMin, xMax, yMin, yMax, 80)
 
@@ -57,29 +62,25 @@ export default function MultipleIntegrals() {
                 </div>
 
                 <label className="flex flex-col gap-3 text-xs font-mono text-ink-500">
-                    <span>Fonction</span>
+                    <span>{str.fnLabel}</span>
                     <select
                         value={presetId}
                         onChange={(e) => setPresetId(e.target.value)}
-                        className="rounded-md border border-ink-700 bg-ink-800 py-1.5 px-2 text-[#e8ebf0] focus:border-amber-accent outline-none"
+                        className="rounded-md border border-ink-700 bg-ink-800 py-1.5 px-2 text-text-primary focus:border-amber-accent outline-none"
                     >
                         {multipleIntegralPresets.map((p) => (
-                            <option key={p.id} value={p.id}>{p.label}</option>
+                            <option key={p.id} value={p.id}>{lang === 'en' ? p.labelEn : p.label}</option>
                         ))}
                     </select>
                 </label>
 
-                <Slider label="Subdivisions par côté (n)" value={n} min={1} max={20} step={1} onChange={setN} />
+                <Slider label={str.subdivLabel} value={n} min={1} max={20} step={1} onChange={setN} />
 
                 <div className="font-mono text-xs text-ink-500 space-y-1">
-                    <div>Somme de Riemann (n×n) ≈ <span className="text-amber-accent">{riemannSum.toFixed(4)}</span></div>
-                    <div>Valeur de référence ≈ <span className="text-blue-accent">{referenceValue.toFixed(4)}</span></div>
+                    <div>{str.riemannLabel} <span className="text-amber-accent">{riemannSum.toFixed(4)}</span></div>
+                    <div>{str.refLabel} <span className="text-blue-accent">{referenceValue.toFixed(4)}</span></div>
                 </div>
-                <p className="text-xs text-ink-500 leading-relaxed">
-                    Chaque prisme a pour base une cellule de la grille et pour hauteur
-                    |f(milieu de la cellule)| — bleu si f y est négative. Augmente n pour voir
-                    la somme de Riemann se rapprocher de la valeur de référence.
-                </p>
+                <p className="text-xs text-ink-500 leading-relaxed">{str.help}</p>
             </div>
             <Scene3D width={420} height={420} build={build} />
         </div>

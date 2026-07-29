@@ -2,6 +2,8 @@ import { useState } from 'react'
 import Scene3D from '../components/Scene3D'
 import Slider from '../components/Slider'
 import { rotX, rotY, rotZ, scale3, matMul3, applyMatrix3 } from '../lib/matrix3'
+import { useLanguage } from '../context/LanguageContext'
+import { topicStrings } from '../lib/topicStrings'
 
 // the 12 edges of the unit cube [0,1]³, each as [x1,y1,z1, x2,y2,z2]
 const unitCubeEdges = [
@@ -19,6 +21,9 @@ export default function Transformations3D() {
     const [sx, setSx] = useState(1)
     const [sy, setSy] = useState(1)
     const [sz, setSz] = useState(1)
+
+    const { lang } = useLanguage()
+    const str = topicStrings['transformations-3d'][lang]
 
     const toRad = (d) => (d * Math.PI) / 180
     const M = matMul3(
@@ -54,16 +59,14 @@ export default function Transformations3D() {
     return (
         <div className="flex flex-col md:flex-row gap-6 items-start">
             <div className="flex flex-col gap-4 w-full max-w-xs">
-                <Slider label="rotation X (°)" value={angleX} min={-180} max={180} step={1} onChange={setAngleX} />
-                <Slider label="rotation Y (°)" value={angleY} min={-180} max={180} step={1} onChange={setAngleY} />
-                <Slider label="rotation Z (°)" value={angleZ} min={-180} max={180} step={1} onChange={setAngleZ} />
-                <Slider label="échelle x" value={sx} min={-2} max={2} step={0.1} onChange={setSx} />
-                <Slider label="échelle y" value={sy} min={-2} max={2} step={0.1} onChange={setSy} />
-                <Slider label="échelle z" value={sz} min={-2} max={2} step={0.1} onChange={setSz} />
-                <p className="text-xs text-ink-500 leading-relaxed">
-                    Glisse la souris pour tourner la caméra, molette pour zoomer. Les flèches sont
-                    Me₁ (ambre), Me₂ (bleu), Me₃ (vert) ; le fil représente le cube unité transformé.
-                </p>
+                <Slider label={str.rotX} value={angleX} min={-180} max={180} step={1} onChange={setAngleX} />
+                <Slider label={str.rotY} value={angleY} min={-180} max={180} step={1} onChange={setAngleY} />
+                <Slider label={str.rotZ} value={angleZ} min={-180} max={180} step={1} onChange={setAngleZ} />
+                <Slider label={str.scaleX} value={sx} min={-2} max={2} step={0.1} onChange={setSx} />
+                <Slider label={str.scaleY} value={sy} min={-2} max={2} step={0.1} onChange={setSy} />
+                <Slider label={str.scaleZ} value={sz} min={-2} max={2} step={0.1} onChange={setSz} />
+
+                <p className="text-xs text-ink-500 leading-relaxed">{str.help}</p>
             </div>
             <Scene3D width={420} height={420} build={build} />
         </div>

@@ -3,11 +3,16 @@ import CoordinatePlane from '../components/CoordinatePlane'
 import PlaneVector from '../components/PlaneVector'
 import { eigen2 } from '../lib/eigen'
 import { dot } from '../lib/projection'
+import { useLanguage } from '../context/LanguageContext'
+import { topicStrings } from '../lib/topicStrings'
 
 export default function SymmetricEndomorphisms() {
     const [a, setA] = useState('2')
     const [b, setB] = useState('1')
     const [c, setC] = useState('1')
+
+    const { lang } = useLanguage()
+    const str = topicStrings['symmetric-endomorphisms'][lang]
 
     const av = parseFloat(a) || 0
     const bv = parseFloat(b) || 0
@@ -19,16 +24,16 @@ export default function SymmetricEndomorphisms() {
     return (
         <div className="flex flex-col md:flex-row gap-6 items-start">
             <div className="flex flex-col gap-3 w-full max-w-xs">
-                <p className="font-mono text-xs text-ink-500">
-                    M = [[a, b], [b, c]] — toujours symétrique par construction
-                </p>
+
+                <p className="font-mono text-xs text-ink-500">{str.matrixNote}</p>
+
                 <div className="flex gap-3 rounded-lg border border-ink-700 bg-ink-900 p-3">
                     {[['a', a, setA], ['b', b, setB], ['c', c, setC]].map(([label, val, setter]) => (
                         <label key={label} className="flex items-center gap-2 text-xs font-mono text-ink-500">
                             <span>{label}</span>
                             <input
                                 type="number" step="0.1" value={val} onChange={(e) => setter(e.target.value)}
-                                className="w-14 text-center rounded-md border border-ink-700 bg-ink-800 py-1 text-[#e8ebf0] focus:border-amber-accent outline-none"
+                                className="w-14 text-center rounded-md border border-ink-700 bg-ink-800 py-1 text-text-primary focus:border-amber-accent outline-none"
                             />
                         </label>
                     ))}
@@ -41,16 +46,10 @@ export default function SymmetricEndomorphisms() {
                         <div>⟨v₁,v₂⟩ = <span className="text-green-ok">{dotProduct.toFixed(4)}</span></div>
                     </div>
                 ) : (
-                    <p className="font-mono text-xs text-ink-500">Cas imprévu — une matrice symétrique réelle a toujours des valeurs propres réelles.</p>
+                    <p className="font-mono text-xs text-ink-500">{str.unexpected}</p>
                 )}
 
-                <p className="text-xs text-ink-500 leading-relaxed">
-                    C'est le théorème spectral : pour une matrice symétrique réelle, les valeurs
-                    propres sont toujours réelles (pas de cas "pas de solution réelle" comme pour
-                    une matrice quelconque) et les vecteurs propres associés à
-                    des valeurs propres distinctes sont toujours orthogonaux — ⟨v₁,v₂⟩ reste à 0
-                    quels que soient a, b, c.
-                </p>
+                <p className="text-xs text-ink-500 leading-relaxed">{str.help}</p>
             </div>
 
             <CoordinatePlane width={420} height={420}>

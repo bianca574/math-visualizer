@@ -2,6 +2,8 @@ import { useState } from 'react'
 import FunctionPlot from '../components/FunctionPlot'
 import { InlineMath } from '../components/Math'
 import { powerSeriesPresets, partialSum } from '../lib/powerSeries'
+import { useLanguage } from '../context/LanguageContext'
+import { topicStrings } from '../lib/topicStrings'
 
 const PLOT_WIDTH = 480
 const PLOT_HEIGHT = 340
@@ -10,6 +12,9 @@ const SAMPLES = 200
 export default function PowerSeries() {
     const [presetId, setPresetId] = useState(powerSeriesPresets[0].id)
     const [nTerms, setNTerms] = useState(5)
+
+    const { lang } = useLanguage()
+    const str = topicStrings['power-series'][lang]
 
     const preset = powerSeriesPresets.find((p) => p.id === presetId)
     const [xMin, xMax] = preset.xRange
@@ -34,25 +39,25 @@ export default function PowerSeries() {
                 </div>
 
                 <label className="flex flex-col gap-1 text-xs font-mono text-ink-500">
-                    <span>série</span>
+                    <span>{str.seriesLabel}</span>
                     <select
                         value={presetId}
                         onChange={(e) => {
                             setPresetId(e.target.value)
                             setNTerms(5)
                         }}
-                        className="rounded-md border border-ink-700 bg-ink-800 py-1.5 px-2 text-[#e8ebf0] focus:border-amber-accent outline-none"
+                        className="rounded-md border border-ink-700 bg-ink-800 py-1.5 px-2 text-text-primary focus:border-amber-accent outline-none"
                     >
                         {powerSeriesPresets.map((p) => (
-                            <option key={p.id} value={p.id}>{p.label}</option>
+                            <option key={p.id} value={p.id}>{lang === 'en' ? p.labelEn : p.label}</option>
                         ))}
                     </select>
                 </label>
 
                 <label className="block text-xs text-ink-500 font-mono">
                     <div className="flex justify-between mb-1">
-                        <span>nombre de termes</span>
-                        <span className="text-[#e8ebf0]">{nTerms}</span>
+                        <span>{str.termsLabel}</span>
+                        <span className="text-text-primary">{nTerms}</span>
                     </div>
                     <input
                         type="range"
@@ -66,20 +71,14 @@ export default function PowerSeries() {
                 </label>
 
                 <div className="font-mono text-xs text-ink-500">
-                    Rayon de convergence R ={' '}
+                    {str.radiusLabel}{' '}
                     <span className="text-amber-accent">{preset.radius === Infinity ? '∞' : preset.radius}</span>
                 </div>
 
                 {preset.domainNote && (
-                    <p className="text-xs text-ink-500 italic">{preset.domainNote}</p>
+                    <p className="text-xs text-ink-500 italic">{lang === 'en' ? preset.domainNoteEn : preset.domainNote}</p>
                 )}
-
-                <p className="text-xs text-ink-500 leading-relaxed">
-                    Bleu pointillé : la fonction cible. Ambre : la somme partielle des{' '}
-                    {nTerms + 1} premiers termes. La bande grisée marque l'intervalle de
-                    convergence (-R, R) — en dehors, la somme partielle n'a aucune raison
-                    de s'approcher de la cible, même si le polynôme reste bien défini.
-                </p>
+                <p className="text-xs text-ink-500 leading-relaxed">{str.help}</p>
             </div>
 
             <FunctionPlot width={PLOT_WIDTH} height={PLOT_HEIGHT} xMin={xMin} xMax={xMax} yMin={yMin} yMax={yMax}>

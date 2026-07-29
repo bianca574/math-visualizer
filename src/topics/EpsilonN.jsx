@@ -2,6 +2,8 @@ import { useMemo, useState } from 'react'
 import FunctionPlot from '../components/FunctionPlot'
 import { InlineMath } from '../components/Math'
 import { sequencePresets, findThresholdN } from '../lib/sequences'
+import { useLanguage } from '../context/LanguageContext'
+import { topicStrings } from '../lib/topicStrings'
 
 const PLOT_WIDTH = 480
 const PLOT_HEIGHT = 340
@@ -10,6 +12,9 @@ const PLOT_MIN_N = 40
 export default function EpsilonN() {
     const [presetId, setPresetId] = useState(sequencePresets[0].id)
     const [epsilon, setEpsilon] = useState(0.2)
+
+    const { lang } = useLanguage()
+    const str = topicStrings['epsilon-n'][lang]
 
     const preset = sequencePresets.find((p) => p.id === presetId)
     const N = useMemo(() => findThresholdN(preset.fn, preset.limit, epsilon), [preset, epsilon])
@@ -31,11 +36,11 @@ export default function EpsilonN() {
                 </div>
 
                 <label className="flex flex-col gap-1 text-xs font-mono text-ink-500">
-                    <span>suite</span>
+                    <span>{str.sequenceLabel}</span>
                     <select
                         value={presetId}
                         onChange={(e) => setPresetId(e.target.value)}
-                        className="rounded-md border border-ink-700 bg-ink-800 py-1.5 px-2 text-[#e8ebf0] focus:border-amber-accent outline-none"
+                        className="rounded-md border border-ink-700 bg-ink-800 py-1.5 px-2 text-text-primary focus:border-amber-accent outline-none"
                     >
                         {sequencePresets.map((p) => (
                             <option key={p.id} value={p.id}>{p.label}</option>
@@ -46,7 +51,7 @@ export default function EpsilonN() {
                 <label className="block text-xs text-ink-500 font-mono">
                     <div className="flex justify-between mb-1">
                         <span>ε</span>
-                        <span className="text-[#e8ebf0]">{epsilon.toFixed(2)}</span>
+                        <span className="text-text-primary">{epsilon.toFixed(2)}</span>
                     </div>
                     <input
                         type="range"
@@ -60,15 +65,12 @@ export default function EpsilonN() {
                 </label>
 
                 <div className="font-mono text-xs text-ink-500 space-y-1">
-                    <div>limite L = {preset.limit.toFixed(3)}</div>
+                    <div>{str.limitLabel} {preset.limit.toFixed(3)}</div>
                     <div>
-                        N = {N ? <span className="text-amber-accent">{N}</span> : <span className="text-blue-accent">non trouvé ≤ 500</span>}
+                        {str.nLabel} {N ? <span className="text-amber-accent">{N}</span> : <span className="text-blue-accent">{str.notFound}</span>}
                     </div>
                 </div>
-                <p className="text-xs text-ink-500 leading-relaxed">
-                    Pour l'ε choisi, N est le plus petit rang à partir duquel tous les termes
-                    restent dans la bande [L-ε, L+ε]. Diminue ε pour voir N augmenter.
-                </p>
+                <p className="text-xs text-ink-500 leading-relaxed">{str.help}</p>
             </div>
 
             <FunctionPlot width={PLOT_WIDTH} height={PLOT_HEIGHT} xMin={0} xMax={plotN + 1} yMin={yMin} yMax={yMax}>

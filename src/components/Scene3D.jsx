@@ -66,7 +66,7 @@ export default function Scene3D({ width = 420, height = 420, build }) {
     return (
         <div
             ref={mountRef}
-            className="rounded-lg border border-ink-700 overflow-hidden"
+            className="rounded-lg border border-ink-700 overflow-hidden cursor-grab active:cursor-grabbing"
             style={{ width, height }}
         />
     )

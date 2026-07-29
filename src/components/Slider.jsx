@@ -3,7 +3,7 @@ export default function Slider({ label, value, min, max, step, onChange }) {
         <label className="block text-xs text-ink-500 font-mono">
             <div className="flex justify-between mb-1">
                 <span>{label}</span>
-                <span className="text-[#e8ebf0]">{value}</span>
+                <span className="text-text-primary">{value}</span>
             </div>
             <input
                 type="range"

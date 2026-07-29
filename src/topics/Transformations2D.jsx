@@ -3,6 +3,8 @@ import CoordinatePlane from '../components/CoordinatePlane'
 import PlaneVector from '../components/PlaneVector'
 import { matMul2, applyMatrix, det2 } from '../lib/matrix'
 import Slider from '../components/Slider'
+import { useLanguage } from '../context/LanguageContext'
+import { topicStrings } from '../lib/topicStrings'
 
 function rotationMatrix(deg) {
     const t = (deg * Math.PI) / 180
@@ -30,6 +32,9 @@ export default function Transformations2D() {
     const [sy, setSy] = useState(1)
     const [shear, setShear] = useState(0)
 
+    const { lang } = useLanguage()
+    const str = topicStrings['transformations-2d'][lang]
+
     const M = matMul2(rotationMatrix(angle), matMul2(shearMatrix(shear), scaleMatrix(sx, sy)))
     const determinant = det2(M)
     const orientationColor = determinant < 0 ? 'var(--color-blue-accent)' : 'var(--color-amber-accent)'
@@ -45,10 +50,10 @@ export default function Transformations2D() {
     return (
         <div className="flex flex-col md:flex-row gap-6 items-start">
             <div className="flex flex-col gap-4 w-full max-w-xs">
-                <Slider label="rotation θ (°)" value={angle} min={-180} max={180} step={1} onChange={setAngle} />
-                <Slider label="échelle x" value={sx} min={-2} max={2} step={0.1} onChange={setSx} />
-                <Slider label="échelle y" value={sy} min={-2} max={2} step={0.1} onChange={setSy} />
-                <Slider label="cisaillement" value={shear} min={-2} max={2} step={0.1} onChange={setShear} />
+                <Slider label={str.rotation} value={angle} min={-180} max={180} step={1} onChange={setAngle} />
+                <Slider label={str.scaleX} value={sx} min={-2} max={2} step={0.1} onChange={setSx} />
+                <Slider label={str.scaleY} value={sy} min={-2} max={2} step={0.1} onChange={setSy} />
+                <Slider label={str.shear} value={shear} min={-2} max={2} step={0.1} onChange={setShear} />
                 <div className="font-mono text-xs text-ink-500">
                     M = [[{M[0][0].toFixed(2)}, {M[0][1].toFixed(2)}], [{M[1][0].toFixed(2)}, {M[1][1].toFixed(2)}]]
                 </div>

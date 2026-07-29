@@ -8,6 +8,7 @@ export const powerSeriesPresets = [
     {
       id: 'geometric',
       label: 'Σ xⁿ (série géométrique)',
+      labelEn: 'Σ xⁿ (geometric series)',
       latex: '\\sum_{n=0}^{\\infty} x^n = \\dfrac{1}{1-x}',
       coeff: () => 1,
       target: (x) => 1 / (1 - x),
@@ -18,6 +19,7 @@ export const powerSeriesPresets = [
     {
       id: 'exp',
       label: 'Σ xⁿ/n! (exponentielle)',
+      labelEn: 'Σ xⁿ/n! (exponential)',
       latex: '\\sum_{n=0}^{\\infty} \\dfrac{x^n}{n!} = e^x',
       coeff: (n) => 1 / factorial(n),
       target: (x) => Math.exp(x),
@@ -28,6 +30,7 @@ export const powerSeriesPresets = [
     {
       id: 'ln',
       label: 'Σ (-1)ⁿ⁺¹xⁿ/n (ln(1+x))',
+      labelEn: 'Σ (-1)ⁿ⁺¹xⁿ/n (ln(1+x))',
       latex: '\\sum_{n=1}^{\\infty} \\dfrac{(-1)^{n+1}}{n}x^n = \\ln(1+x)',
       coeff: (n) => (n === 0 ? 0 : (n % 2 === 1 ? 1 : -1) / n),
       target: (x) => Math.log(1 + x),
@@ -35,10 +38,12 @@ export const powerSeriesPresets = [
       xRange: [-0.9, 3.5],
       yRange: [-4, 3],
       domainNote: "définie seulement pour x > -1",
+      domainNoteEn: 'defined only for x > -1',
     },
     {
       id: 'cos',
       label: 'Σ (-1)ⁿ x²ⁿ/(2n)! (cosinus)',
+      labelEn: 'Σ (-1)ⁿ x²ⁿ/(2n)! (cosine)',
       latex: '\\sum_{n=0}^{\\infty} \\dfrac{(-1)^n}{(2n)!}x^{2n} = \\cos(x)',
       coeff: (n) => (n % 2 === 0 ? Math.pow(-1, n / 2) / factorial(n) : 0),
       target: (x) => Math.cos(x),

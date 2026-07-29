@@ -1,6 +1,6 @@
 import { eigen2 } from './eigen'
 
-export function classifySignature(a, b, c) {
+export function classifySignature(a, b, c, lang = 'fr') {
   const { l1, l2 } = eigen2([[a, b], [b, c]])
   const round = (x) => Math.round(x * 1e6) / 1e6
   const s1 = Math.sign(round(l1))
@@ -8,11 +8,17 @@ export function classifySignature(a, b, c) {
   const positives = [s1, s2].filter((s) => s > 0).length
   const negatives = [s1, s2].filter((s) => s < 0).length
 
+  const labels = {
+    fr: { pos: 'définie positive', neg: 'définie négative', mixed: 'indéfinie (signature mixte)', deg: 'dégénérée (au moins une valeur propre nulle)' },
+    en: { pos: 'positive definite', neg: 'negative definite', mixed: 'indefinite (mixed signature)', deg: 'degenerate (at least one zero eigenvalue)' },
+  }
+  const L = labels[lang]
+
   let label
-  if (positives === 2) label = 'définie positive'
-  else if (negatives === 2) label = 'définie négative'
-  else if (positives === 1 && negatives === 1) label = 'indéfinie (signature mixte)'
-  else label = 'dégénérée (au moins une valeur propre nulle)'
+  if (positives === 2) label = L.pos
+  else if (negatives === 2) label = L.neg
+  else if (positives === 1 && negatives === 1) label = L.mixed
+  else label = L.deg
 
   return { l1, l2, positives, negatives, label }
 }

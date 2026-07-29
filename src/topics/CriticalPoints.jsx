@@ -4,6 +4,8 @@ import Slider from '../components/Slider'
 import { InlineMath } from '../components/Math'
 import { criticalPointPresets, classifyCriticalPoint } from '../lib/criticalPoints'
 import { buildSurfaceGeometry } from '../lib/surfaceMesh'
+import { useLanguage } from '../context/LanguageContext'
+import { topicStrings } from '../lib/topicStrings'
 
 export default function CriticalPoints() {
     const [presetId, setPresetId] = useState(criticalPointPresets[0].id)
@@ -12,8 +14,11 @@ export default function CriticalPoints() {
     const [x, setX] = useState(0.6)
     const [y, setY] = useState(0.6)
 
+    const { lang } = useLanguage()
+    const str = topicStrings['critical-points'][lang]
+
     const z = preset.fn(x, y)
-    const result = classifyCriticalPoint(preset.fn, x, y)
+    const result = classifyCriticalPoint(preset.fn, x, y, lang)
     const gradMag = Math.hypot(result.grad.fx, result.grad.fy)
     const isCritical = gradMag < 0.05
 
@@ -52,7 +57,7 @@ export default function CriticalPoints() {
                 </div>
 
                 <label className="flex flex-col gap-3 text-xs font-mono text-ink-500">
-                    <span>Fonction</span>
+                    <span>{str.fnLabel}</span>
                     <select
                         value={presetId}
                         onChange={(e) => {
@@ -60,7 +65,7 @@ export default function CriticalPoints() {
                             setX(0.6)
                             setY(0.6)
                         }}
-                        className="rounded-md border border-ink-700 bg-ink-800 py-1.5 px-2 text-[#e8ebf0] focus:border-amber-accent outline-none"
+                        className="rounded-md border border-ink-700 bg-ink-800 py-1.5 px-2 text-text-primary focus:border-amber-accent outline-none"
                     >
                         {criticalPointPresets.map((p) => (
                             <option key={p.id} value={p.id}>{p.label}</option>
@@ -80,17 +85,9 @@ export default function CriticalPoints() {
                 {isCritical ? (
                     <div className="font-mono text-sm text-amber-accent">{result.label}</div>
                 ) : (
-                    <p className="font-mono text-xs text-ink-500 italic">
-                        Pas encore un point critique (‖∇f‖ ≈ {gradMag.toFixed(2)}) — ajuste x et y
-                        jusqu'à annuler la flèche bleue.
-                    </p>
+                    <p className="font-mono text-xs text-ink-500 italic">{str.notCritical(gradMag.toFixed(2))}</p>
                 )}
-
-                <p className="text-xs text-ink-500 leading-relaxed">
-                    Le test des dérivées secondes (signe de D et de fxx) ne classe le point que
-                    là où le gradient s'annule — ailleurs, D et fxx décrivent juste la courbure
-                    locale, pas la nature d'un extremum.
-                </p>
+                <p className="text-xs text-ink-500 leading-relaxed">{str.help}</p>
             </div>
             <Scene3D width={420} height={420} build={build} />
         </div>

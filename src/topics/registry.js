@@ -9,7 +9,7 @@ import ConicsQuadrics from './ConicsQuadrics'
 import EpsilonN from './EpsilonN'
 import PowerSeries from './PowerSeries'
 import FunctionSeries from './FunctionSeries'
-import FormesLineaires from './LinearForms'
+import LinearForms from './LinearForms'
 import DotProductProjection from './DotProductProjection'
 import SymmetricEndomorphisms from './SymmetricEndomorphisms'
 import Isometries from './Isometries'
@@ -29,7 +29,7 @@ export const topicComponents = {
   'epsilon-n': EpsilonN,
   'power-series': PowerSeries,
   'function-series': FunctionSeries,
-  'formes-lineaires': FormesLineaires,
+  'linear-forms': LinearForms,
   'dot-product-projection': DotProductProjection,
   'symmetric-endomorphisms': SymmetricEndomorphisms,
   isometries: Isometries,

@@ -2,6 +2,8 @@ import { useState, useMemo } from 'react'
 import FunctionPlot from '../components/FunctionPlot'
 import { InlineMath } from '../components/Math'
 import { functionSeriesPresets, supError } from '../lib/functionSeries'
+import { useLanguage } from '../context/LanguageContext'
+import { topicStrings } from '../lib/topicStrings'
 
 const MAIN_W = 460
 const MAIN_H = 300
@@ -12,6 +14,9 @@ const MAX_N = 60
 export default function FunctionSeries() {
     const [presetId, setPresetId] = useState(functionSeriesPresets[0].id)
     const [n, setN] = useState(1)
+
+    const { lang } = useLanguage()
+    const str = topicStrings['function-series'][lang]
 
     const preset = functionSeriesPresets.find((p) => p.id === presetId)
     const [a, b] = preset.domain
@@ -42,17 +47,17 @@ export default function FunctionSeries() {
                     </div>
 
                     <label className="flex flex-col gap-1 text-xs font-mono text-ink-500">
-                        <span>fonction</span>
+                        <span>{str.fnLabel}</span>
                         <select
                             value={presetId}
                             onChange={(e) => {
                                 setPresetId(e.target.value)
                                 setN(1)
                             }}
-                            className="rounded-md border border-ink-700 bg-ink-800 py-1.5 px-2 text-[#e8ebf0] focus:border-amber-accent outline-none"
+                            className="rounded-md border border-ink-700 bg-ink-800 py-1.5 px-2 text-text-primary focus:border-amber-accent outline-none"
                         >
                             {functionSeriesPresets.map((p) => (
-                                <option key={p.id} value={p.id}>{p.label}</option>
+                                <option key={p.id} value={p.id}>{lang === 'en' ? p.labelEn : p.label}</option>
                             ))}
                         </select>
                     </label>
@@ -60,7 +65,7 @@ export default function FunctionSeries() {
                     <label className="block text-xs text-ink-500 font-mono">
                         <div className="flex justify-between mb-1">
                             <span>n</span>
-                            <span className="text-[#e8ebf0]">{n}</span>
+                            <span className="text-text-primary">{n}</span>
                         </div>
                         <input
                             type="range"
@@ -77,14 +82,14 @@ export default function FunctionSeries() {
                         <div>sup|fₙ − f| ≈ {currentError.toFixed(3)}</div>
                         <div>
                             {preset.uniform ? (
-                                <span className="text-amber-accent">convergence uniforme</span>
+                                <span className="text-amber-accent">{str.uniform}</span>
                             ) : (
-                                <span className="text-blue-accent">convergence simple seulement</span>
+                                <span className="text-blue-accent">{str.nonUniform}</span>
                             )}
                         </div>
                     </div>
 
-                    <p className="text-xs text-ink-500 leading-relaxed">{preset.note}</p>
+                    <p className="text-xs text-ink-500 leading-relaxed">{lang === 'en' ? preset.noteEn : preset.note}</p>
                 </div>
 
                 <FunctionPlot width={MAIN_W} height={MAIN_H} xMin={a} xMax={b} yMin={preset.yRange[0]} yMax={preset.yRange[1]}>
@@ -113,10 +118,7 @@ export default function FunctionSeries() {
             </div>
 
             <div className="max-w-xl">
-                <p className="text-xs text-ink-500 mb-2">
-                    sup|fₙ − f| en fonction de n — si la courbe tend vers 0, la convergence est
-                    uniforme ; si elle plafonne au-dessus de 0, elle ne l'est pas.
-                </p>
+                <p className="text-xs text-ink-500 mb-2">{str.errNote}</p>
                 <FunctionPlot width={ERR_W} height={ERR_H} xMin={1} xMax={MAX_N} yMin={0} yMax={maxErr * 1.15}>
                     {(scale) => {
                         const path = errorCurve.map((p) => scale.toScreen(p.n, p.err))

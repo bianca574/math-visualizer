@@ -20,7 +20,7 @@ export default function MatrixInput({ matrix, onChange }) {
                         step="0.1"
                         value={val}
                         onChange={(e) => updateCell(r, c, e.target.value)}
-                        className="w-16 text-center rounded-md border border-ink-700 bg-ink-800 py-1.5 text-[#e8ebf0] focus:border-amber-accent outline-none"
+                        className="w-16 text-center rounded-md border border-ink-700 bg-ink-800 py-1.5 text-text-primary focus:border-amber-accent outline-none"
                     />
                 )),
             )}

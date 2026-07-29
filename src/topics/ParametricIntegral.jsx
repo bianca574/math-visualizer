@@ -2,6 +2,8 @@ import { useMemo, useState } from 'react'
 import FunctionPlot from '../components/FunctionPlot'
 import { InlineMath } from '../components/Math'
 import { parametricIntegralPresets, integrate } from '../lib/parametricIntegral'
+import { useLanguage } from '../context/LanguageContext'
+import { topicStrings } from '../lib/topicStrings'
 
 const PLOT_W = 440
 const PLOT_H = 300
@@ -14,6 +16,9 @@ export default function ParametricIntegral() {
     const [a, b] = preset.domain
 
     const [t, setT] = useState((tMin + tMax) / 2)
+
+    const { lang } = useLanguage()
+    const str = topicStrings['parametric-integrals'][lang]
 
     const currentIntegral = useMemo(() => integrate((x) => preset.fn(x, t), a, b), [preset, t, a, b])
 
@@ -53,8 +58,8 @@ export default function ParametricIntegral() {
                         <InlineMath math={preset.integrandLatex} />
                     </div>
 
-                    <label className="flex flex-col gap-1 text-xs font-mono text-ink-500">
-                        <span>Intégrale</span>
+                    <label className="flex flex-col gap-3 text-xs font-mono text-ink-500">
+                        <span>{str.integralLabel}</span>
                         <select
                             value={presetId}
                             onChange={(e) => {
@@ -62,7 +67,7 @@ export default function ParametricIntegral() {
                                 const np = parametricIntegralPresets.find((p) => p.id === e.target.value)
                                 setT((np.tRange[0] + np.tRange[1]) / 2)
                             }}
-                            className="rounded-md border border-ink-700 bg-ink-800 py-1.5 px-2 text-[#e8ebf0] focus:border-amber-accent outline-none"
+                            className="rounded-md border border-ink-700 bg-ink-800 py-1.5 px-2 text-text-primary focus:border-amber-accent outline-none"
                         >
                             {parametricIntegralPresets.map((p) => (
                                 <option key={p.id} value={p.id}>{p.label}</option>
@@ -73,7 +78,7 @@ export default function ParametricIntegral() {
                     <label className="block text-xs text-ink-500 font-mono">
                         <div className="flex justify-between mb-1">
                             <span>t</span>
-                            <span className="text-[#e8ebf0]">{t.toFixed(2)}</span>
+                            <span className="text-text-primary">{t.toFixed(2)}</span>
                         </div>
                         <input
                             type="range"
@@ -87,11 +92,7 @@ export default function ParametricIntegral() {
                     <div className="font-mono text-xs text-ink-500">
                         I({t.toFixed(2)}) ≈ <span className="text-amber-accent">{currentIntegral.toFixed(4)}</span>
                     </div>
-                    <p className="text-xs text-ink-500 leading-relaxed">
-                        Ci-contre : f(x,t) pour le t actuel — l'aire ambrée est I(t). En dessous :
-                        I(t) en fonction de t, calculée numériquement (ambre) contre la formule
-                        connue (bleu pointillé) — les deux courbes devraient coïncider.
-                    </p>
+                    <p className="text-xs text-ink-500 leading-relaxed">{str.help}</p>
                 </div>
 
                 <div className="flex flex-col gap-4">

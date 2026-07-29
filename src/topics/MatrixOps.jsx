@@ -3,12 +3,17 @@ import CoordinatePlane from '../components/CoordinatePlane'
 import PlaneVector from '../components/PlaneVector'
 import MatrixInput from '../components/MatrixInput'
 import { det2, applyMatrix } from '../lib/matrix'
+import { useLanguage } from '../context/LanguageContext'
+import { topicStrings } from '../lib/topicStrings'
 
 export default function MatrixOps() {
     const [matrix, setMatrix] = useState([
         ['1', '0'],
         ['0', '1'],
     ])
+    const { lang } = useLanguage()
+    const str = topicStrings['matrix-ops'][lang]
+
     const numericMatrix = matrix.map((row) => row.map((v) => parseFloat(v) || 0))
 
     const determinant = det2(numericMatrix)
@@ -32,9 +37,7 @@ export default function MatrixOps() {
                     det(M) = <span style={{ color: orientationColor }}>{determinant.toFixed(2)}</span>
                 </div>
                 <p className="text-xs text-ink-500 max-w-xs leading-relaxed">
-                    {determinant < 0
-                        ? "Le déterminant est négatif : l'orientation du plan est inversée."
-                        : "Le déterminant est l'aire signée du parallélogramme formé par Me₁ et Me₂."}
+                    {determinant < 0 ? str.detNegative : str.detPositive}
                 </p>
             </div>
 

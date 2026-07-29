@@ -1,16 +1,19 @@
 import { useState } from 'react'
 import { BlockMath } from '../components/Math'
 import { gaussReductionSteps } from '../lib/gaussReduction'
+import { useLanguage } from '../context/LanguageContext'
 
 export default function GaussReduction() {
     const [a, setA] = useState('1')
     const [b, setB] = useState('2')
     const [c, setC] = useState('1')
 
+    const { lang } = useLanguage()
+
     const av = parseFloat(a) || 0
     const bv = parseFloat(b) || 0
     const cv = parseFloat(c) || 0
-    const { steps } = gaussReductionSteps(av, bv, cv)
+    const { steps } = gaussReductionSteps(av, bv, cv, lang)
 
     return (
         <div className="max-w-2xl space-y-4">
@@ -27,7 +30,7 @@ export default function GaussReduction() {
                             step="0.1"
                             value={val}
                             onChange={(e) => setter(e.target.value)}
-                            className="w-20 text-center rounded-md border border-ink-700 bg-ink-800 py-1 text-[#e8ebf0] focus:border-amber-accent outline-none"
+                            className="w-20 text-center rounded-md border border-ink-700 bg-ink-800 py-1 text-text-primary focus:border-amber-accent outline-none"
                         />
                     </label>
                 ))}

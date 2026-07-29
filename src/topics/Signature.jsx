@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import CoordinatePlane from '../components/CoordinatePlane'
 import { classifySignature, levelCurve } from '../lib/quadraticForm'
+import { useLanguage } from '../context/LanguageContext'
+import { topicStrings } from '../lib/topicStrings'
 
 function NumberField({ label, value, onChange }) {
     return (
@@ -11,7 +13,7 @@ function NumberField({ label, value, onChange }) {
                 step="0.1"
                 value={value}
                 onChange={(e) => onChange(e.target.value)}
-                className="w-20 text-center rounded-md border border-ink-700 bg-ink-800 py-1 text-[#e8ebf0] focus:border-amber-accent outline-none"
+                className="w-20 text-center rounded-md border border-ink-700 bg-ink-800 py-1 text-text-primary focus:border-amber-accent outline-none"
             />
         </label>
     )
@@ -22,10 +24,13 @@ export default function Signature() {
     const [b, setB] = useState('0.5')
     const [c, setC] = useState('1')
 
+    const { lang } = useLanguage()
+    const str = topicStrings['signature'][lang]
+
     const av = parseFloat(a) || 0
     const bv = parseFloat(b) || 0
     const cv = parseFloat(c) || 0
-    const result = classifySignature(av, bv, cv)
+    const result = classifySignature(av, bv, cv, lang)
     const curve = levelCurve(av, bv, cv)
 
     return (
@@ -45,8 +50,7 @@ export default function Signature() {
                     </div>
                 </div>
                 <p className="text-xs text-ink-500 leading-relaxed">
-                    La courbe tracée est la ligne de niveau Q(x, y) = ±1 : ellipse, hyperbole,
-                    ou dégénérée selon les signes de λ₁ et λ₂.
+                    {str.help}
                 </p>
             </div>
 

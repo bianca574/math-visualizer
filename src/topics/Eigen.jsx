@@ -3,12 +3,17 @@ import CoordinatePlane from '../components/CoordinatePlane'
 import PlaneVector from '../components/PlaneVector'
 import MatrixInput from '../components/MatrixInput'
 import { eigen2 } from '../lib/eigen'
+import { useLanguage } from '../context/LanguageContext'
+import { topicStrings } from '../lib/topicStrings'
 
 export default function Eigen() {
     const [matrix, setMatrix] = useState([
         ['2', '0'],
         ['1', '3'],
     ])
+    const { lang } = useLanguage()
+    const str = topicStrings['eigen'][lang]
+
     const numericMatrix = matrix.map((row) => row.map((v) => parseFloat(v) || 0))
     const result = eigen2(numericMatrix)
 
@@ -29,16 +34,10 @@ export default function Eigen() {
                         </div>
                     </div>
                 ) : (
-                    <p className="font-mono text-sm text-ink-500">
-                        Pas de valeurs propres réelles — la transformation comporte une rotation.
-                    </p>
+                    <p className="font-mono text-sm text-ink-500">{str.noReal}</p>
                 )}
 
-                <p className="text-xs text-ink-500 leading-relaxed">
-                    Les droites en pointillés sont les directions propres : tout vecteur porté par
-                    l'une d'elles reste sur la même droite après transformation, seule sa longueur
-                    change (facteur λ).
-                </p>
+                <p className="text-xs text-ink-500 leading-relaxed">{str.help}</p>
             </div>
 
             <CoordinatePlane width={420} height={420}>

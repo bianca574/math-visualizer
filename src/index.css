@@ -21,9 +21,24 @@
   --color-blue-accent-soft: #8dabf2;
   --color-green-ok: #6fcf97;
 
+  --color-text-primary: #e8ebf0;
+  --color-text-strong: #ffffff;
+
   --font-display: 'Newsreader', 'Georgia', serif;
   --font-body: 'Inter', system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+}
+
+.theme-light {
+  --color-ink-950: var(--color-paper-50);
+  --color-ink-900: #ffffff;
+  --color-ink-800: var(--color-paper-100);
+  --color-ink-700: var(--color-paper-grid);
+  --color-ink-600: #c7cdd6;
+  --color-ink-500: #5b6472;
+  --color-grid: var(--color-paper-grid);
+  --color-text-primary: var(--color-paper-ink);
+  --color-text-strong: #0f131a;
 }
 
 html {
@@ -33,7 +48,7 @@ html {
 body {
   font-family: var(--font-body);
   background-color: var(--color-ink-950);
-  color: #e8ebf0;
+  color: var(--color-text-primary);
 }
 
 .grid-backdrop {

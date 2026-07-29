@@ -6,6 +6,8 @@ import MatrixInput from '../components/MatrixInput'
 import { applyMatrix } from '../lib/matrix'
 import { applyMatrix3 } from '../lib/matrix3'
 import { classifyIsometry2, classifyIsometry3 } from '../lib/isometry'
+import { useLanguage } from '../context/LanguageContext'
+import { topicStrings } from '../lib/topicStrings'
 
 const unitCubeEdges = [
     [0, 0, 0, 1, 0, 0], [0, 0, 0, 0, 1, 0], [0, 0, 0, 0, 0, 1],
@@ -16,6 +18,9 @@ const unitCubeEdges = [
 ]
 
 function View2D() {
+    const { lang } = useLanguage()
+    const str = topicStrings.isometries[lang]
+
     const [matrix, setMatrix] = useState([
         ['0', '-1'],
         ['1', '0'],
@@ -30,22 +35,19 @@ function View2D() {
             <div className="flex flex-col gap-3 w-full max-w-xs">
                 <MatrixInput matrix={matrix} onChange={setMatrix} />
                 {!result.orthogonal && (
-                    <p className="text-xs text-blue-accent">Cette matrice ne préserve pas les longueurs — ce n'est pas une isométrie.</p>
+                    <p className="text-xs text-blue-accent">{str.notIsometry}</p>
                 )}
                 {result.orthogonal && result.type === 'rotation' && (
                     <p className="font-mono text-sm text-ink-500">
-                        <span className="text-amber-accent">Rotation</span> d'angle {result.angleDeg.toFixed(1)}°
+                        <span className="text-amber-accent">{str.rotationOf}</span> {str.angleWord} {result.angleDeg.toFixed(1)}°
                     </p>
                 )}
                 {result.orthogonal && result.type === 'reflection' && (
                     <p className="font-mono text-sm text-ink-500">
-                        <span className="text-blue-accent">Réflexion</span> d'axe à {result.axisAngleDeg.toFixed(1)}° de l'horizontale
+                        <span className="text-blue-accent">{str.reflectionOf}</span> {str.axisAt} {result.axisAngleDeg.toFixed(1)}° {str.ofHorizontal}
                     </p>
                 )}
-                <p className="text-xs text-ink-500 leading-relaxed">
-                    En dimension 2, det = +1 donne toujours une rotation, det = -1 donne toujours
-                    une réflexion.
-                </p>
+                <p className="text-xs text-ink-500 leading-relaxed">{str.help2D}</p>
             </div>
 
             <CoordinatePlane width={420} height={420}>
@@ -83,6 +85,9 @@ function View2D() {
 }
 
 function View3D() {
+    const { lang } = useLanguage()
+    const str = topicStrings.isometries[lang]
+
     const [matrix, setMatrix] = useState([
         ['1', '0', '0'],
         ['0', '1', '0'],
@@ -92,9 +97,9 @@ function View3D() {
     const result = classifyIsometry3(numeric)
 
     const subtypeLabel = {
-        inversion: 'Symétrie rotatoire (symétrie centrale)',
-        reflection: 'Symétrie orthogonale (réflexion par rapport à un plan)',
-        antirotation: 'Symétrie rotatoire',
+        inversion: str.subtypeInversion,
+        reflection: str.subtypeReflection,
+        antirotation: str.subtypeAntirotation,
     }
 
     function build(content, THREE) {
@@ -126,23 +131,19 @@ function View3D() {
             <div className="flex flex-col gap-3 w-full max-w-xs">
                 <MatrixInput matrix={matrix} onChange={setMatrix} />
                 {!result.orthogonal && (
-                    <p className="text-xs text-blue-accent">Cette matrice ne préserve pas les longueurs — ce n'est pas une isométrie.</p>
+                    <p className="text-xs text-blue-accent">{str.notIsometry}</p>
                 )}
                 {result.orthogonal && result.type === 'rotation' && (
                     <p className="font-mono text-sm text-ink-500">
-                        <span className="text-amber-accent">Rotation</span> de {result.angleDeg.toFixed(1)}° autour de l'axe (flèche)
+                        <span className="text-amber-accent">{str.rotationOf}</span> {result.angleDeg.toFixed(1)}° {str.aroundAxis}
                     </p>
                 )}
-                {result.orthogonal && result.type === 'antirotation' && (
+                {result.orthogonal && result.type === 'symetrie-rotatoire' && (
                     <p className="font-mono text-sm text-ink-500">
-                        <span className="text-blue-accent">{subtypeLabel[result.subtype]}</span> — angle {result.angleDeg.toFixed(1)}°
+                        <span className="text-blue-accent">{subtypeLabel[result.subtype]}</span> — {str.angleLabel} {result.angleDeg.toFixed(1)}°
                     </p>
                 )}
-                <p className="text-xs text-ink-500 leading-relaxed">
-                    det = +1 → rotation autour de l'axe indiqué. det = -1 → antirotation : le
-                    plan bleu est le plan de réflexion perpendiculaire à l'axe. À 0°, c'est une
-                    symétrie centrale ; à 180°, une réflexion (symétrie orthogonale).
-                </p>
+                <p className="text-xs text-ink-500 leading-relaxed">{str.help3D}</p>
             </div>
             <Scene3D width={420} height={420} build={build} />
         </div>
@@ -158,7 +159,7 @@ export default function Isometries() {
                     <button
                         key={d}
                         onClick={() => setDim(d)}
-                        className={`px-3 py-1.5 text-xs font-mono rounded-md border ${dim === d ? 'border-amber-accent text-white bg-ink-800' : 'border-ink-700 text-ink-500'
+                        className={`px-3 py-1.5 text-xs font-mono rounded-md border ${dim === d ? 'border-amber-accent text-text-strong bg-ink-800' : 'border-ink-700 text-ink-500'
                             }`}
                     >
                         {d}D

@@ -2,6 +2,8 @@ import { useState } from 'react'
 import MatrixInput from '../components/MatrixInput'
 import Scene3D from '../components/Scene3D'
 import { det3, applyMatrix3 } from '../lib/matrix3'
+import { useLanguage } from '../context/LanguageContext'
+import { topicStrings } from '../lib/topicStrings'
 
 const unitCubeEdges = [
     [0, 0, 0, 1, 0, 0], [0, 0, 0, 0, 1, 0], [0, 0, 0, 0, 0, 1],
@@ -17,6 +19,9 @@ export default function Determinants() {
         ['0', '1', '0'],
         ['0.3', '0', '1'],
     ])
+    const { lang } = useLanguage()
+    const str = topicStrings['determinants'][lang]
+
     const numeric = matrix.map((row) => row.map((v) => parseFloat(v) || 0))
     const determinant = det3(numeric)
     const orientationHex = determinant < 0 ? 0x5b8def : 0xe8a33d
@@ -51,18 +56,14 @@ export default function Determinants() {
         <div className="flex flex-col md:flex-row gap-6 items-start">
             <div className="flex flex-col gap-4 w-full max-w-xs">
                 <p className="text-xs text-ink-500 leading-relaxed">
-                    En 2D (voir "Opérations sur les matrices"), le déterminant est l'aire signée
-                    du parallélogramme image. En 3D, c'est le <strong>volume signé</strong> du
-                    parallélépipède formé par les images des trois vecteurs de base.
+                    {str.intro}
                 </p>
                 <MatrixInput matrix={matrix} onChange={setMatrix} />
                 <div className="font-mono text-sm">
                     det(M) = <span style={{ color: orientationVar }}>{determinant.toFixed(2)}</span>
                 </div>
                 <p className="text-xs text-ink-500 leading-relaxed">
-                    {determinant < 0
-                        ? "Signe négatif : la base image est indirecte (orientation inversée)."
-                        : 'Le volume du parallélépipède vaut |det(M)|.'}
+                    {determinant < 0 ? str.negative : str.positive}
                 </p>
             </div>
             <Scene3D width={420} height={420} build={build} />
