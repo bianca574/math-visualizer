@@ -43,15 +43,6 @@ export const categories = [
       ],
     },
     {
-      id: 'fourier',
-      label: 'Séries de Fourier',
-      labelEn: 'Fourier series',
-      topics: [
-        { id: 'partial-sums', label: 'Sommes partielles interactives', labelEn: 'Interactive partial sums', status: 'planned' },
-        { id: 'gibbs', label: 'Phénomène de Gibbs', labelEn: 'Gibbs phenomenon', status: 'planned' },
-      ],
-    },
-    {
       id: 'multivariable-analysis',
       label: 'Analyse à plusieurs variables',
       labelEn: 'Multivariable analysis',
@@ -59,16 +50,6 @@ export const categories = [
         { id: 'parametric-integrals', label: 'Intégrales dépendant d\'un paramètre', labelEn: 'Parameter-dependent integrals', status: 'ready' },
         { id: 'multiple-integrals', label: 'Intégrales multiples', labelEn: 'Multiple integrals', status: 'ready' },
         { id: 'critical-points', label: 'Points critiques (plusieurs variables)', labelEn: 'Critical points (multivariable functions)', status: 'ready' },
-      ],
-    },
-    {
-      id: 'odes',
-      label: 'Équations différentielles',
-      labelEn: 'Differential equations',
-      topics: [
-        { id: 'direction-fields', label: 'Champ de directions', labelEn: 'Direction fields', status: 'planned' },
-        { id: 'phase-portraits', label: 'Portraits de phase', labelEn: 'Phase portraits', status: 'planned' },
-        { id: 'solution-curves', label: 'Courbes solutions', labelEn: 'Solution curves', status: 'planned' },
       ],
     },
   ]

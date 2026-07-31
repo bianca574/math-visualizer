@@ -3,7 +3,6 @@ import { useParams, Link } from 'react-router-dom'
 import { findTopic } from '../data/topics'
 import { topicComponents } from '../topics/registry'
 import { topicMeta } from '../topics/meta'
-import CodeBlock from '../components/CodeBlock'
 import ExplanationText from '../components/ExplanationText'
 import { useLanguage } from '../context/LanguageContext'
 import { ui } from '../lib/ui'
@@ -70,7 +69,6 @@ export default function TopicPage() {
             {activeTab === 1 && (
                 meta ? <ExplanationText text={meta.explanation[lang]} /> : <p className="text-ink-500 text-sm">{t.explanationMissing}</p>
             )}
-            {activeTab === 2 && (meta ? <CodeBlock code={meta.source} /> : <p className="text-ink-500 text-sm">{t.codeMissing}</p>)}
         </div>
     )
 }

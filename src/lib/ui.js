@@ -6,7 +6,7 @@ export const ui = {
       openMenu: 'Ouvrir le menu',
       comingSoon: 'A venir',
       home: 'Accueil',
-      tabs: ['Visualisation', 'Explication', 'Code'],
+      tabs: ['Visualisation', 'Explication'],
       heroKicker: 'L2 / L3 — Double cursus Info-Math',
       heroTitleA: 'Voir les maths ',
       heroTitleEm: 'bouger',
@@ -16,7 +16,6 @@ export const ui = {
       notFound: 'Sujet introuvable.',
       backHome: "← Retour à l'accueil",
       explanationMissing: "Explication à venir pour ce module.",
-      codeMissing: 'Code à venir pour ce module.',
     },
     en: {
       subtitle: 'Interactive explorer — Algebra, Analysis & Series',
@@ -25,7 +24,7 @@ export const ui = {
       openMenu: 'Open menu',
       comingSoon: 'Coming soon',
       home: 'Home',
-      tabs: ['Visualization', 'Explanation', 'Code'],
+      tabs: ['Visualization', 'Explanation'],
       heroKicker: 'L2 / L3 — Info-Math dual degree',
       heroTitleA: 'Watch math ',
       heroTitleEm: 'move',
@@ -35,6 +34,5 @@ export const ui = {
       notFound: 'Topic not found.',
       backHome: '← Back to home',
       explanationMissing: 'Explanation coming for this module.',
-      codeMissing: 'Code coming for this module.',
     },
   }

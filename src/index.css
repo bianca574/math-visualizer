@@ -29,6 +29,26 @@
   --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
 }
 
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-ink-950);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-ink-600);
+  border-radius: 6px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-ink-500);
+}
+
+* {
+  scrollbar-color: var(--color-ink-600) var(--color-ink-950);
+  scrollbar-width: thin;
+}
+
 .theme-light {
   --color-ink-950: var(--color-paper-50);
   --color-ink-900: #ffffff;

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Outlet } from 'react-router-dom'
 import { Menu, Sun, Moon, Languages } from 'lucide-react'
 import Sidebar from './Sidebar'
@@ -8,6 +8,11 @@ import { ui } from '../lib/ui'
 export default function Layout() {
     const [sidebarOpen, setSidebarOpen] = useState(false)
     const [light, setLight] = useState(false)
+
+    useEffect(() => {
+        document.documentElement.classList.toggle('theme-light', light)
+    }, [light])
+
     const { lang, setLang } = useLanguage()
     const t = ui[lang]
 
