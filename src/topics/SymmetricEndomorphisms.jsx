@@ -22,7 +22,7 @@ export default function SymmetricEndomorphisms() {
     const dotProduct = result.real ? dot(result.v1, result.v2) : null
 
     return (
-        <div className="flex flex-col md:flex-row gap-6 items-start">
+        <div className="flex flex-col md:flex-row gap-15 items-start">
             <div className="flex flex-col gap-3 w-full max-w-xs">
 
                 <p className="font-mono text-xs text-ink-500">{str.matrixNote}</p>

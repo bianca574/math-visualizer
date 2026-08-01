@@ -30,7 +30,7 @@ export default function MatrixOps() {
     ]
 
     return (
-        <div className="flex flex-col md:flex-row gap-6 items-start">
+        <div className="flex flex-col md:flex-row gap-15 items-start">
             <div className="flex flex-col gap-4">
                 <MatrixInput matrix={matrix} onChange={setMatrix} />
                 <div className="font-mono text-sm text-ink-500">

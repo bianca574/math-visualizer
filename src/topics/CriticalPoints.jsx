@@ -6,24 +6,40 @@ import { criticalPointPresets, classifyCriticalPoint } from '../lib/criticalPoin
 import { buildSurfaceGeometry } from '../lib/surfaceMesh'
 import { useLanguage } from '../context/LanguageContext'
 import { topicStrings } from '../lib/topicStrings'
+import CustomFunctionInput from '../components/CustomFunctionInput'
+import { compileFunction } from '../lib/customFunction'
 
 export default function CriticalPoints() {
     const [presetId, setPresetId] = useState(criticalPointPresets[0].id)
     const preset = criticalPointPresets.find((p) => p.id === presetId)
-    const [xMin, xMax, yMin, yMax] = preset.domain
+
+    const [customExpr, setCustomExpr] = useState('')
+    const [dxMin, setDxMin] = useState('-2')
+    const [dxMax, setDxMax] = useState('2')
+    const [dyMin, setDyMin] = useState('-2')
+    const [dyMax, setDyMax] = useState('2')
+    const { fn: customFn, error: customError } = customExpr.trim()
+        ? compileFunction(customExpr, ['x', 'y'])
+        : { fn: null, error: null }
+
+    const activeFn = customFn || preset.fn
+    const [xMin, xMax, yMin, yMax] = customFn
+        ? [parseFloat(dxMin) || -2, parseFloat(dxMax) || 2, parseFloat(dyMin) || -2, parseFloat(dyMax) || 2]
+        : preset.domain
+
     const [x, setX] = useState(0.6)
     const [y, setY] = useState(0.6)
 
     const { lang } = useLanguage()
     const str = topicStrings['critical-points'][lang]
 
-    const z = preset.fn(x, y)
-    const result = classifyCriticalPoint(preset.fn, x, y, lang)
+    const z = activeFn(x, y)
+    const result = classifyCriticalPoint(activeFn, x, y, lang)
     const gradMag = Math.hypot(result.grad.fx, result.grad.fy)
     const isCritical = gradMag < 0.05
 
     function build(content, THREE) {
-        const geometry = buildSurfaceGeometry(THREE, preset.fn, xMin, xMax, yMin, yMax, 50)
+        const geometry = buildSurfaceGeometry(THREE, activeFn, xMin, xMax, yMin, yMax, 50)
         const material = new THREE.MeshStandardMaterial({
             color: 0xe8a33d, transparent: true, opacity: 0.55, side: THREE.DoubleSide, flatShading: true,
         })
@@ -71,6 +87,26 @@ export default function CriticalPoints() {
                             <option key={p.id} value={p.id}>{p.label}</option>
                         ))}
                     </select>
+                    <CustomFunctionInput
+                        label={str.customLabel}
+                        placeholder={str.customPlaceholder}
+                        value={customExpr}
+                        onChange={setCustomExpr}
+                        error={customError}
+                    />
+                    {customExpr.trim() && !customError && (
+                        <div className="grid grid-cols-2 gap-2">
+                            {[['xMin', dxMin, setDxMin], ['xMax', dxMax, setDxMax], ['yMin', dyMin, setDyMin], ['yMax', dyMax, setDyMax]].map(
+                                ([label, val, setter]) => (
+                                    <label key={label} className="flex items-center gap-3 text-xs font-mono text-ink-500">
+                                        <span>{label}</span>
+                                        <input type="number" step="0.1" value={val} onChange={(e) => setter(e.target.value)}
+                                            className="w-16 rounded-md border border-ink-700 bg-ink-800 py-1 px-2 text-text-primary focus:border-amber-accent outline-none" />
+                                    </label>
+                                ),
+                            )}
+                        </div>
+                    )}
                 </label>
 
                 <Slider label="x" value={x} min={xMin} max={xMax} step={0.05} onChange={setX} />

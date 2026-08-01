@@ -4,6 +4,8 @@ import { InlineMath } from '../components/Math'
 import { functionSeriesPresets, supError } from '../lib/functionSeries'
 import { useLanguage } from '../context/LanguageContext'
 import { topicStrings } from '../lib/topicStrings'
+import CustomFunctionInput from '../components/CustomFunctionInput'
+import { compileFunction } from '../lib/customFunction'
 
 const MAIN_W = 460
 const MAIN_H = 300
@@ -19,34 +21,47 @@ export default function FunctionSeries() {
     const str = topicStrings['function-series'][lang]
 
     const preset = functionSeriesPresets.find((p) => p.id === presetId)
-    const [a, b] = preset.domain
+
+    const [customExpr, setCustomExpr] = useState('')
+    const [domainA, setDomainA] = useState('0')
+    const [domainB, setDomainB] = useState('1')
+    const { fn: customFn, error: customError } = customExpr.trim()
+        ? compileFunction(customExpr, ['x', 'n'])
+        : { fn: null, error: null }
+
+    const activeFn = customFn ? (x, nv) => customFn(x, nv) : preset.fn
+    const activeLimit = customFn ? (x) => customFn(x, 1000) : preset.limit
+    const [a, b] = customFn ? [parseFloat(domainA) || 0, parseFloat(domainB) || 1] : preset.domain
 
     const fnPoints = []
     const limitPoints = []
     const SAMPLES = 200
+
     for (let i = 0; i <= SAMPLES; i++) {
         const x = a + ((b - a) * i) / SAMPLES
-        fnPoints.push({ x, y: preset.fn(x, n) })
-        limitPoints.push({ x, y: preset.limit(x) })
+        fnPoints.push({ x, y: activeFn(x, n) })
+        limitPoints.push({ x, y: activeLimit(x) })
     }
 
-    const currentError = useMemo(() => supError(preset, n), [preset, n])
+    const activePreset = customFn ? { ...preset, fn: activeFn, limit: activeLimit, domain: [a, b] } : preset
+    const currentError = useMemo(() => supError(activePreset, n), [activePreset, n])
     const errorCurve = useMemo(() => {
         const pts = []
-        for (let k = 1; k <= MAX_N; k++) pts.push({ n: k, err: supError(preset, k) })
+        for (let k = 1; k <= MAX_N; k++) pts.push({ n: k, err: supError(activePreset, k) })
         return pts
-    }, [preset])
+    }, [activePreset])
+
     const maxErr = Math.max(...errorCurve.map((p) => p.err), 0.05)
 
     return (
         <div className="flex flex-col gap-6">
-            <div className="flex flex-col md:flex-row gap-6 items-start">
-                <div className="flex flex-col gap-4 w-full max-w-xs">
+            <div className="flex flex-col md:flex-row gap-15 items-start">
+                <div className="flex flex-col gap-7 w-full max-w-xs">
                     <div className="rounded-lg border border-ink-700 bg-ink-900 p-4">
                         <InlineMath math={preset.latex} />
                     </div>
 
-                    <label className="flex flex-col gap-1 text-xs font-mono text-ink-500">
+                    <label className="flex flex-col gap-3 text-xs font-mono text-ink-500">
                         <span>{str.fnLabel}</span>
                         <select
                             value={presetId}
@@ -60,6 +75,27 @@ export default function FunctionSeries() {
                                 <option key={p.id} value={p.id}>{lang === 'en' ? p.labelEn : p.label}</option>
                             ))}
                         </select>
+                        <CustomFunctionInput
+                            label={str.customLabel}
+                            placeholder={str.customPlaceholder}
+                            value={customExpr}
+                            onChange={setCustomExpr}
+                            error={customError}
+                        />
+                        {customExpr.trim() && !customError && (
+                            <div className="flex gap-2">
+                                <label className="flex items-center gap-3 text-xs font-mono text-ink-500">
+                                    <span>a</span>
+                                    <input type="number" step="0.1" value={domainA} onChange={(e) => setDomainA(e.target.value)}
+                                        className="w-16 rounded-md border border-ink-700 bg-ink-800 py-1 px-2 text-text-primary focus:border-amber-accent outline-none" />
+                                </label>
+                                <label className="flex items-center gap-3 text-xs font-mono text-ink-500">
+                                    <span>b</span>
+                                    <input type="number" step="0.1" value={domainB} onChange={(e) => setDomainB(e.target.value)}
+                                        className="w-16 rounded-md border border-ink-700 bg-ink-800 py-1 px-2 text-text-primary focus:border-amber-accent outline-none" />
+                                </label>
+                            </div>
+                        )}
                     </label>
 
                     <label className="block text-xs text-ink-500 font-mono">

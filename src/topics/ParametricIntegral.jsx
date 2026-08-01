@@ -4,6 +4,8 @@ import { InlineMath } from '../components/Math'
 import { parametricIntegralPresets, integrate } from '../lib/parametricIntegral'
 import { useLanguage } from '../context/LanguageContext'
 import { topicStrings } from '../lib/topicStrings'
+import CustomFunctionInput from '../components/CustomFunctionInput'
+import { compileFunction } from '../lib/customFunction'
 
 const PLOT_W = 440
 const PLOT_H = 300
@@ -12,32 +14,46 @@ const I_SAMPLES = 80
 export default function ParametricIntegral() {
     const [presetId, setPresetId] = useState(parametricIntegralPresets[0].id)
     const preset = parametricIntegralPresets.find((p) => p.id === presetId)
-    const [tMin, tMax] = preset.tRange
-    const [a, b] = preset.domain
+
+    const [customExpr, setCustomExpr] = useState('')
+    const [domA, setDomA] = useState('0')
+    const [domB, setDomB] = useState('1')
+    const [tMinC, setTMinC] = useState('0')
+    const [tMaxC, setTMaxC] = useState('5')
+    const { fn: customFn, error: customError } = customExpr.trim()
+        ? compileFunction(customExpr, ['x', 't'])
+        : { fn: null, error: null }
+
+    const activeFn = customFn || preset.fn
+    const [a, b] = customFn ? [parseFloat(domA) || 0, parseFloat(domB) || 1] : preset.domain
+    const [tMin, tMax] = customFn ? [parseFloat(tMinC) || 0, parseFloat(tMaxC) || 1] : preset.tRange
 
     const [t, setT] = useState((tMin + tMax) / 2)
 
     const { lang } = useLanguage()
     const str = topicStrings['parametric-integrals'][lang]
 
-    const currentIntegral = useMemo(() => integrate((x) => preset.fn(x, t), a, b), [preset, t, a, b])
+    const currentIntegral = useMemo(() => integrate((x) => activeFn(x, t), a, b), [preset, t, a, b, customExpr])
 
     const integrandPoints = []
     for (let i = 0; i <= 200; i++) {
         const x = a + ((b - a) * i) / 200
-        integrandPoints.push({ x, y: preset.fn(x, t) })
+        integrandPoints.push({ x, y: activeFn(x, t) })
     }
 
     const iOfTPoints = useMemo(() => {
         const pts = []
         for (let i = 0; i <= I_SAMPLES; i++) {
             const tv = tMin + ((tMax - tMin) * i) / I_SAMPLES
-            pts.push({ t: tv, value: integrate((x) => preset.fn(x, tv), a, b) })
+            pts.push({ t: tv, value: integrate((x) => activeFn(x, tv), a, b) })
         }
         return pts
-    }, [preset, tMin, tMax, a, b])
+    }, [preset, tMin, tMax, a, b, customExpr])
 
     const targetPoints = useMemo(() => {
+
+        if (!preset.target || customFn) return []
+
         const pts = []
         for (let i = 0; i <= I_SAMPLES; i++) {
             const tv = tMin + ((tMax - tMin) * i) / I_SAMPLES
@@ -45,7 +61,7 @@ export default function ParametricIntegral() {
             if (val !== null && Number.isFinite(val)) pts.push({ t: tv, value: val })
         }
         return pts
-    }, [preset, tMin, tMax])
+    }, [preset, tMin, tMax, customFn])
 
     const iYMin = Math.min(...iOfTPoints.map((p) => p.value)) - 0.3
     const iYMax = Math.max(...iOfTPoints.map((p) => p.value)) + 0.3
@@ -73,6 +89,41 @@ export default function ParametricIntegral() {
                                 <option key={p.id} value={p.id}>{p.label}</option>
                             ))}
                         </select>
+                        <CustomFunctionInput
+                            label={str.customLabel}
+                            placeholder={str.customPlaceholder}
+                            value={customExpr}
+                            onChange={setCustomExpr}
+                            error={customError}
+                        />
+                        {customExpr.trim() && !customError && (
+                            <>
+                                <div className="flex gap-2">
+                                    <label className="flex items-center gap-3 text-xs font-mono text-ink-500">
+                                        <span>a</span>
+                                        <input type="number" step="0.1" value={domA} onChange={(e) => setDomA(e.target.value)}
+                                            className="w-16 rounded-md border border-ink-700 bg-ink-800 py-1 px-2 text-text-primary focus:border-amber-accent outline-none" />
+                                    </label>
+                                    <label className="flex items-center gap-3 text-xs font-mono text-ink-500">
+                                        <span>b</span>
+                                        <input type="number" step="0.1" value={domB} onChange={(e) => setDomB(e.target.value)}
+                                            className="w-16 rounded-md border border-ink-700 bg-ink-800 py-1 px-2 text-text-primary focus:border-amber-accent outline-none" />
+                                    </label>
+                                </div>
+                                <div className="flex gap-2">
+                                    <label className="flex items-center gap-3 text-xs font-mono text-ink-500">
+                                        <span>t min</span>
+                                        <input type="number" step="0.1" value={tMinC} onChange={(e) => setTMinC(e.target.value)}
+                                            className="w-16 rounded-md border border-ink-700 bg-ink-800 py-1 px-2 text-text-primary focus:border-amber-accent outline-none" />
+                                    </label>
+                                    <label className="flex items-center gap-3 text-xs font-mono text-ink-500">
+                                        <span>t max</span>
+                                        <input type="number" step="0.1" value={tMaxC} onChange={(e) => setTMaxC(e.target.value)}
+                                            className="w-16 rounded-md border border-ink-700 bg-ink-800 py-1 px-2 text-text-primary focus:border-amber-accent outline-none" />
+                                    </label>
+                                </div>
+                            </>
+                        )}
                     </label>
 
                     <label className="block text-xs text-ink-500 font-mono">

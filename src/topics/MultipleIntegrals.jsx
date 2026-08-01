@@ -6,17 +6,32 @@ import { multipleIntegralPresets, integrate2D } from '../lib/multipleIntegral'
 import { buildSurfaceGeometry } from '../lib/surfaceMesh'
 import { useLanguage } from '../context/LanguageContext'
 import { topicStrings } from '../lib/topicStrings'
+import CustomFunctionInput from '../components/CustomFunctionInput'
+import { compileFunction } from '../lib/customFunction'
 
 export default function MultipleIntegrals() {
     const [presetId, setPresetId] = useState(multipleIntegralPresets[0].id)
     const [n, setN] = useState(6)
     const preset = multipleIntegralPresets.find((p) => p.id === presetId)
-    const [xMin, xMax, yMin, yMax] = preset.domain
+
+    const [customExpr, setCustomExpr] = useState('')
+    const [dxMin, setDxMin] = useState('-1')
+    const [dxMax, setDxMax] = useState('1')
+    const [dyMin, setDyMin] = useState('-1')
+    const [dyMax, setDyMax] = useState('1')
+    const { fn: customFn, error: customError } = customExpr.trim()
+        ? compileFunction(customExpr, ['x', 'y'])
+        : { fn: null, error: null }
+
+    const activeFn = customFn || preset.fn
+    const [xMin, xMax, yMin, yMax] = customFn
+        ? [parseFloat(dxMin) || -1, parseFloat(dxMax) || 1, parseFloat(dyMin) || -1, parseFloat(dyMax) || 1]
+        : preset.domain
 
     const { lang } = useLanguage()
     const str = topicStrings['multiple-integrals'][lang]
 
-    const referenceValue = integrate2D(preset.fn, xMin, xMax, yMin, yMax, 80)
+    const referenceValue = integrate2D(activeFn, xMin, xMax, yMin, yMax, 80)
 
     const cellW = (xMax - xMin) / n
     const cellD = (yMax - yMin) / n
@@ -26,14 +41,14 @@ export default function MultipleIntegrals() {
         const cx = xMin + (i + 0.5) * cellW
         for (let j = 0; j < n; j++) {
             const cy = yMin + (j + 0.5) * cellD
-            const value = preset.fn(cx, cy)
+            const value = activeFn(cx, cy)
             riemannSum += value * cellW * cellD
             cells.push({ cx, cy, value })
         }
     }
 
     function build(content, THREE) {
-        const geometry = buildSurfaceGeometry(THREE, preset.fn, xMin, xMax, yMin, yMax, 40)
+        const geometry = buildSurfaceGeometry(THREE, activeFn, xMin, xMax, yMin, yMax, 40)
         const wireMat = new THREE.MeshBasicMaterial({ color: 0x8b96a8, wireframe: true, transparent: true, opacity: 0.35 })
         content.add(new THREE.Mesh(geometry, wireMat))
 
@@ -72,6 +87,26 @@ export default function MultipleIntegrals() {
                             <option key={p.id} value={p.id}>{lang === 'en' ? p.labelEn : p.label}</option>
                         ))}
                     </select>
+                    <CustomFunctionInput
+                        label={str.customLabel}
+                        placeholder={str.customPlaceholder}
+                        value={customExpr}
+                        onChange={setCustomExpr}
+                        error={customError}
+                    />
+                    {customExpr.trim() && !customError && (
+                        <div className="grid grid-cols-2 gap-2">
+                            {[['xMin', dxMin, setDxMin], ['xMax', dxMax, setDxMax], ['yMin', dyMin, setDyMin], ['yMax', dyMax, setDyMax]].map(
+                                ([label, val, setter]) => (
+                                    <label key={label} className="flex items-center gap-3 text-xs font-mono text-ink-500">
+                                        <span>{label}</span>
+                                        <input type="number" step="0.1" value={val} onChange={(e) => setter(e.target.value)}
+                                            className="w-16 rounded-md border border-ink-700 bg-ink-800 py-1 px-2 text-text-primary focus:border-amber-accent outline-none" />
+                                    </label>
+                                ),
+                            )}
+                        </div>
+                    )}
                 </label>
 
                 <Slider label={str.subdivLabel} value={n} min={1} max={20} step={1} onChange={setN} />

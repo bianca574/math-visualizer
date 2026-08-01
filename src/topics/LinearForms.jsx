@@ -22,7 +22,7 @@ export default function LinearForms() {
     const kernel = kernelLine(av, bv)
 
     return (
-        <div className="flex flex-col md:flex-row gap-6 items-start">
+        <div className="flex flex-col md:flex-row gap-15 items-start">
             <div className="flex flex-col gap-3 w-full max-w-xs">
                 <p className="font-mono text-xs text-ink-500">{str.coefficientsLabel}</p>
                 <div className="flex gap-3 rounded-lg border border-ink-700 bg-ink-900 p-3">

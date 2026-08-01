@@ -48,8 +48,8 @@ export default function Transformations2D() {
     ]
 
     return (
-        <div className="flex flex-col md:flex-row gap-6 items-start">
-            <div className="flex flex-col gap-4 w-full max-w-xs">
+        <div className="flex flex-col md:flex-row gap-15 items-start">
+            <div className="flex flex-col gap-7 w-full max-w-xs">
                 <Slider label={str.rotation} value={angle} min={-180} max={180} step={1} onChange={setAngle} />
                 <Slider label={str.scaleX} value={sx} min={-2} max={2} step={0.1} onChange={setSx} />
                 <Slider label={str.scaleY} value={sy} min={-2} max={2} step={0.1} onChange={setSy} />

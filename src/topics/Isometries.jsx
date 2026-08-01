@@ -31,7 +31,7 @@ function View2D() {
     const sampleImage = applyMatrix(numeric, sample.x, sample.y)
 
     return (
-        <div className="flex flex-col md:flex-row gap-6 items-start">
+        <div className="flex flex-col md:flex-row gap-15 items-start">
             <div className="flex flex-col gap-3 w-full max-w-xs">
                 <MatrixInput matrix={matrix} onChange={setMatrix} />
                 {!result.orthogonal && (
@@ -127,7 +127,7 @@ function View3D() {
     }
 
     return (
-        <div className="flex flex-col md:flex-row gap-6 items-start">
+        <div className="flex flex-col md:flex-row gap-15 items-start">
             <div className="flex flex-col gap-3 w-full max-w-xs">
                 <MatrixInput matrix={matrix} onChange={setMatrix} />
                 {!result.orthogonal && (

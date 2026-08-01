@@ -53,8 +53,8 @@ export default function Determinants() {
     }
 
     return (
-        <div className="flex flex-col md:flex-row gap-6 items-start">
-            <div className="flex flex-col gap-4 w-full max-w-xs">
+        <div className="flex flex-col md:flex-row gap-15 items-start">
+            <div className="flex flex-col gap-7 w-full max-w-xs">
                 <p className="text-xs text-ink-500 leading-relaxed">
                     {str.intro}
                 </p>

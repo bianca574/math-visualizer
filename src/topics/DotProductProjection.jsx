@@ -25,7 +25,7 @@ export default function DotProductProjection() {
     const angleDeg = cosTheta !== null ? (Math.acos(Math.max(-1, Math.min(1, cosTheta))) * 180) / Math.PI : null
 
     return (
-        <div className="flex flex-col md:flex-row gap-6 items-start">
+        <div className="flex flex-col md:flex-row gap-15 items-start">
             <div className="flex flex-col gap-3 w-full max-w-xs">
                 <p className="font-mono text-xs text-ink-500">{str.moveLabel}</p>
                 <div className="grid grid-cols-2 gap-3 rounded-lg border border-ink-700 bg-ink-900 p-3">

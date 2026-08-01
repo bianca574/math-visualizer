@@ -59,30 +59,40 @@ export const topicStrings = {
       fr: {
         sequenceLabel: 'Suite', limitLabel: 'Limite L =', nLabel: 'N =', notFound: 'Non trouvé ≤ 500',
         help: "Pour l'ε choisi, N est le plus petit rang à partir duquel tous les termes restent dans la bande [L-ε, L+ε]. Diminue ε pour voir N augmenter.",
+        customLabel: 'ou saisis ta propre suite uₙ =', 
+        customPlaceholder: 'ex : 1/n, (n+1)/n, sin(n)/n' 
       },
       en: {
         sequenceLabel: 'Sequence', limitLabel: 'Limit L =', nLabel: 'N =', notFound: 'Not found ≤ 500',
         help: 'For the chosen ε, N is the smallest rank beyond which every term stays within the band [L-ε, L+ε]. Lower ε to see N grow.',
+        customLabel: 'or enter your own sequence uₙ =', 
+        customPlaceholder: 'e.g. 1/n, (n+1)/n, sin(n)/n' 
       },
     },
     'power-series': {
       fr: {
         seriesLabel: 'Série', termsLabel: 'Nombre de termes', radiusLabel: 'Rayon de convergence R =',
         help: "Bleu pointillé : la fonction cible. Ambre : la somme partielle des N premiers termes. La bande grisée marque l'intervalle de convergence (-R, R) — en dehors, la somme partielle n'a aucune raison de s'approcher de la cible, même si le polynôme reste bien défini.",
+        customLabel: 'ou saisis ton propre coefficient aₙ =', 
+        customPlaceholder: 'ex : 1/n!, 1/(n+1), (-1)^n/n' 
       },
       en: {
         seriesLabel: 'Series', termsLabel: 'Number of terms', radiusLabel: 'Radius of convergence R =',
         help: 'Dashed blue: the target function. Amber: the partial sum of the first N terms. The shaded band marks the interval of convergence (-R, R) — outside it, the partial sum has no reason to approach the target, even though the polynomial itself is still well-defined.',
+        customLabel: 'or enter your own coefficient aₙ =', 
+        customPlaceholder: 'e.g. 1/n!, 1/(n+1), (-1)^n/n' 
       },
     },
     'function-series': {
       fr: {
         fnLabel: 'Fonction', uniform: 'Convergence uniforme', nonUniform: 'Convergence simple seulement',
         errNote: "sup|fₙ − f| en fonction de n — si la courbe tend vers 0, la convergence est uniforme ; si elle plafonne au-dessus de 0, elle ne l'est pas.",
+        customLabel: 'ou saisis ta propre fₙ(x, n) =', customPlaceholder: 'ex : x^n, sin(n*x)/sqrt(n)', domainLabel: 'domaine [a, b]'
       },
       en: {
         fnLabel: 'Function', uniform: 'Uniform convergence', nonUniform: 'Pointwise convergence only',
         errNote: 'sup|fₙ − f| as a function of n — if the curve tends to 0, convergence is uniform; if it plateaus above 0, it isn\u2019t.',
+        customLabel: 'or enter your own fₙ(x, n) =', customPlaceholder: 'e.g. x^n, sin(n*x)/sqrt(n)', domainLabel: 'domain [a, b]' 
       },
     },
     'linear-forms': {
@@ -155,10 +165,12 @@ export const topicStrings = {
       fr: {
         integralLabel: 'Intégrale',
         help: "Ci-contre : f(x,t) pour le t actuel — l'aire ambrée est I(t). En dessous : I(t) en fonction de t, calculée numériquement (ambre) contre la formule connue (bleu pointillé, souvent superposée à l'ambre) — la position sur cette courbe pour le t actuel est marquée d'un point.",
+        customLabel: 'ou saisis f(x,t) =', customPlaceholder: 'ex : x^t, sin(x+t)', domainLabel: 'domaine en x [a, b]', tRangeLabel: 'plage de t'
       },
       en: {
         integralLabel: 'Integral',
         help: 'Alongside: f(x,t) for the current t — the amber area is I(t). Below: I(t) as a function of t, computed numerically (amber) against the known formula (dashed blue, often overlapping amber) — the current t\u2019s position on that curve is marked with a dot.',
+        customLabel: 'ou saisis f(x,t) =', customPlaceholder: 'ex : x^t, sin(x+t)', domainLabel: 'domaine en x [a, b]', tRangeLabel: 'plage de t'
       },
     },
     'multiple-integrals': {
@@ -166,11 +178,13 @@ export const topicStrings = {
         fnLabel: 'Fonction', subdivLabel: 'Subdivisions par côté (n)',
         riemannLabel: 'Somme de Riemann (n×n) ≈', refLabel: 'Valeur de référence ≈',
         help: "Chaque prisme a pour base une cellule de la grille et pour hauteur |f(milieu de la cellule)| — bleu si f y est négative. Augmente n pour voir la somme de Riemann se rapprocher de la valeur de référence.",
+        customLabel: 'ou saisis f(x,y) =', customPlaceholder: 'ex : x^2+y^2, sin(x)*cos(y)', domainLabel: 'domaine [xMin,xMax]×[yMin,yMax]'
       },
       en: {
         fnLabel: 'Function', subdivLabel: 'Subdivisions per side (n)',
         riemannLabel: 'Riemann sum (n\u00d7n) \u2248', refLabel: 'Reference value \u2248',
         help: 'Each prism has a grid cell as its base and |f(cell midpoint)| as its height — blue if f is negative there. Increase n to watch the Riemann sum approach the reference value.',
+        customLabel: 'or enter f(x,y) =', customPlaceholder: 'e.g. x^2+y^2, sin(x)*cos(y)', domainLabel: 'domain [xMin,xMax]×[yMin,yMax]'
       },
     },
     'critical-points': {
@@ -179,12 +193,14 @@ export const topicStrings = {
         notCritical: (mag) => `Pas encore un point critique (\u2016\u2207f\u2016 \u2248 ${mag}) — ajuste x et y jusqu'à annuler la flèche bleue.`,
         help: "Le test des dérivées secondes (signe de D et de fxx) ne classe le point que là où le gradient s'annule — ailleurs, D et fxx décrivent juste la courbure locale, pas la nature d'un extremum.",
         labelMin: 'Minimum local', labelMax: 'Maximum local', labelSaddle: 'Point selle', labelIndeterminate: 'Indéterminé (D \u2248 0)',
+        customLabel: 'ou saisis f(x,y) =', customPlaceholder: 'ex : x^2-y^2, x^3-3*x*y^2' 
       },
       en: {
         fnLabel: 'Function',
         notCritical: (mag) => `Not yet a critical point (\u2016\u2207f\u2016 \u2248 ${mag}) — adjust x and y until the blue arrow vanishes.`,
         help: 'The second-derivative test (sign of D and of fxx) only classifies the point where the gradient actually vanishes — elsewhere, D and fxx just describe the local curvature, not the nature of an extremum.',
         labelMin: 'Local minimum', labelMax: 'Local maximum', labelSaddle: 'Saddle point', labelIndeterminate: 'Indeterminate (D \u2248 0)',
+        customLabel: 'or enter f(x,y) =', customPlaceholder: 'e.g. x^2-y^2, x^3-3*x*y^2' 
       },
     },
   }

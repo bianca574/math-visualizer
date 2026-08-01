@@ -34,7 +34,7 @@ export default function Signature() {
     const curve = levelCurve(av, bv, cv)
 
     return (
-        <div className="flex flex-col md:flex-row gap-6 items-start">
+        <div className="flex flex-col md:flex-row gap-15 items-start">
             <div className="flex flex-col gap-3 w-full max-w-xs">
                 <div className="rounded-lg border border-ink-700 bg-ink-900 p-4 space-y-2">
                     <p className="font-mono text-sm text-ink-500 mb-2">Q(x, y) = a·x² + 2b·xy + c·y²</p>

@@ -4,6 +4,8 @@ import { InlineMath } from '../components/Math'
 import { powerSeriesPresets, partialSum } from '../lib/powerSeries'
 import { useLanguage } from '../context/LanguageContext'
 import { topicStrings } from '../lib/topicStrings'
+import CustomFunctionInput from '../components/CustomFunctionInput'
+import { compileFunction } from '../lib/customFunction'
 
 const PLOT_WIDTH = 480
 const PLOT_HEIGHT = 340
@@ -17,6 +19,16 @@ export default function PowerSeries() {
     const str = topicStrings['power-series'][lang]
 
     const preset = powerSeriesPresets.find((p) => p.id === presetId)
+
+    const [customExpr, setCustomExpr] = useState('')
+    const { fn: customCoeff, error: customError } = customExpr.trim()
+        ? compileFunction(customExpr, ['n'])
+        : { fn: null, error: null }
+
+    const activePreset = customCoeff
+        ? { ...preset, coeff: customCoeff, target: null, radius: null }
+        : preset
+
     const [xMin, xMax] = preset.xRange
     const [yMin, yMax] = preset.yRange
 
@@ -25,20 +37,22 @@ export default function PowerSeries() {
     for (let i = 0; i <= SAMPLES; i++) {
         const x = xMin + ((xMax - xMin) * i) / SAMPLES
         if (preset.id === 'ln' && x <= -1) continue
-        const t = preset.target(x)
-        if (Number.isFinite(t) && Math.abs(t) < 1e6) targetPoints.push({ x, y: t })
-        const p = partialSum(preset, x, nTerms)
+
+        const t = activePreset.target ? activePreset.target(x) : null
+        if (t !== null && Number.isFinite(t) && Math.abs(t) < 1e6) targetPoints.push({ x, y: t })
+
+        const p = partialSum(activePreset, x, nTerms)
         if (Number.isFinite(p) && Math.abs(p) < 1e6) partialPoints.push({ x, y: p })
     }
 
     return (
-        <div className="flex flex-col md:flex-row gap-6 items-start">
-            <div className="flex flex-col gap-4 w-full max-w-xs">
+        <div className="flex flex-col md:flex-row gap-15 items-start">
+            <div className="flex flex-col gap-7 w-full max-w-xs">
                 <div className="rounded-lg border border-ink-700 bg-ink-900 p-4">
                     <InlineMath math={preset.latex} />
                 </div>
 
-                <label className="flex flex-col gap-1 text-xs font-mono text-ink-500">
+                <label className="flex flex-col gap-3 text-xs font-mono text-ink-500">
                     <span>{str.seriesLabel}</span>
                     <select
                         value={presetId}
@@ -52,6 +66,13 @@ export default function PowerSeries() {
                             <option key={p.id} value={p.id}>{lang === 'en' ? p.labelEn : p.label}</option>
                         ))}
                     </select>
+                    <CustomFunctionInput
+                        label={str.customLabel}
+                        placeholder={str.customPlaceholder}
+                        value={customExpr}
+                        onChange={setCustomExpr}
+                        error={customError}
+                    />
                 </label>
 
                 <label className="block text-xs text-ink-500 font-mono">
@@ -70,10 +91,12 @@ export default function PowerSeries() {
                     />
                 </label>
 
-                <div className="font-mono text-xs text-ink-500">
-                    {str.radiusLabel}{' '}
-                    <span className="text-amber-accent">{preset.radius === Infinity ? '∞' : preset.radius}</span>
-                </div>
+                {activePreset.radius !== null && (
+                    <div className="font-mono text-xs text-ink-500">
+                        {str.radiusLabel}{' '}
+                        <span className="text-amber-accent">{activePreset.radius === Infinity ? '∞' : activePreset.radius}</span>
+                    </div>
+                )}
 
                 {preset.domainNote && (
                     <p className="text-xs text-ink-500 italic">{lang === 'en' ? preset.domainNoteEn : preset.domainNote}</p>
@@ -86,14 +109,15 @@ export default function PowerSeries() {
                     const targetPath = targetPoints.map((p) => scale.toScreen(p.x, p.y))
                     const partialPath = partialPoints.map((p) => scale.toScreen(p.x, p.y))
 
-                    const radiusLeft = Math.max(-preset.radius, xMin)
-                    const radiusRight = Math.min(preset.radius, xMax)
+                    const radiusLeft = activePreset.radius !== null ? Math.max(-activePreset.radius, xMin) : xMin
+                    const radiusRight = activePreset.radius !== null ? Math.min(activePreset.radius, xMax) : xMax
+
                     const bandLeft = scale.toScreen(radiusLeft, 0)
                     const bandRight = scale.toScreen(radiusRight, 0)
 
                     return (
                         <>
-                            {preset.radius !== Infinity && (
+                            {activePreset.radius !== null && activePreset.radius !== Infinity && (
                                 <rect
                                     x={bandLeft.x}
                                     y={0}

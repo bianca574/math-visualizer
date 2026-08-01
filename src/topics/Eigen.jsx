@@ -18,7 +18,7 @@ export default function Eigen() {
     const result = eigen2(numericMatrix)
 
     return (
-        <div className="flex flex-col md:flex-row gap-6 items-start">
+        <div className="flex flex-col md:flex-row gap-15 items-start">
             <div className="flex flex-col gap-4 max-w-xs">
                 <MatrixInput matrix={matrix} onChange={setMatrix} />
 

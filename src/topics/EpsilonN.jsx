@@ -4,6 +4,8 @@ import { InlineMath } from '../components/Math'
 import { sequencePresets, findThresholdN } from '../lib/sequences'
 import { useLanguage } from '../context/LanguageContext'
 import { topicStrings } from '../lib/topicStrings'
+import CustomFunctionInput from '../components/CustomFunctionInput'
+import { compileFunction } from '../lib/customFunction'
 
 const PLOT_WIDTH = 480
 const PLOT_HEIGHT = 340
@@ -17,25 +19,35 @@ export default function EpsilonN() {
     const str = topicStrings['epsilon-n'][lang]
 
     const preset = sequencePresets.find((p) => p.id === presetId)
-    const N = useMemo(() => findThresholdN(preset.fn, preset.limit, epsilon), [preset, epsilon])
+
+    const [customExpr, setCustomExpr] = useState('')
+    const [customLimit, setCustomLimit] = useState('0')
+    const { fn: customFn, error: customError } = customExpr.trim()
+        ? compileFunction(customExpr, ['n'])
+        : { fn: null, error: null }
+
+    const activeFn = customFn || preset.fn
+    const activeLimit = customFn ? parseFloat(customLimit) || 0 : preset.limit
+
+    const N = useMemo(() => findThresholdN(activeFn, activeLimit, epsilon), [preset, epsilon, customExpr, customLimit])
 
     const plotN = Math.max(PLOT_MIN_N, N ? N + 15 : PLOT_MIN_N)
     const points = []
-    for (let n = 1; n <= plotN; n++) points.push({ n, value: preset.fn(n) })
+    for (let n = 1; n <= plotN; n++) points.push({ n, value: activeFn(n) })
 
-    const deviations = points.map((p) => Math.abs(p.value - preset.limit))
+    const deviations = points.map((p) => Math.abs(p.value - activeLimit))
     const maxDev = Math.max(...deviations, epsilon * 1.5, 0.3)
-    const yMin = preset.limit - maxDev * 1.15
-    const yMax = preset.limit + maxDev * 1.15
+    const yMin = activeLimit - maxDev * 1.15
+    const yMax = activeLimit + maxDev * 1.15
 
     return (
-        <div className="flex flex-col md:flex-row gap-6 items-start">
-            <div className="flex flex-col gap-4 w-full max-w-xs">
+        <div className="flex flex-col md:flex-row gap-15 items-start">
+            <div className="flex flex-col gap-7 w-full max-w-xs">
                 <div className="rounded-lg border border-ink-700 bg-ink-900 p-4">
                     <InlineMath math={preset.latex} />
                 </div>
 
-                <label className="flex flex-col gap-1 text-xs font-mono text-ink-500">
+                <label className="flex flex-col gap-3 text-xs font-mono text-ink-500">
                     <span>{str.sequenceLabel}</span>
                     <select
                         value={presetId}
@@ -46,6 +58,23 @@ export default function EpsilonN() {
                             <option key={p.id} value={p.id}>{p.label}</option>
                         ))}
                     </select>
+                    <CustomFunctionInput
+                        label={str.customLabel}
+                        placeholder={str.customPlaceholder}
+                        value={customExpr}
+                        onChange={setCustomExpr}
+                        error={customError}
+                    />
+                    {customExpr.trim() && !customError && (
+                        <label className="flex flex-col gap-3 text-xs font-mono text-ink-500">
+                            <span>limite L =</span>
+                            <input
+                                type="number" step="0.1" value={customLimit}
+                                onChange={(e) => setCustomLimit(e.target.value)}
+                                className="w-24 rounded-md border border-ink-700 bg-ink-800 py-1 px-2 text-text-primary focus:border-amber-accent outline-none"
+                            />
+                        </label>
+                    )}
                 </label>
 
                 <label className="block text-xs text-ink-500 font-mono">
@@ -65,7 +94,7 @@ export default function EpsilonN() {
                 </label>
 
                 <div className="font-mono text-xs text-ink-500 space-y-1">
-                    <div>{str.limitLabel} {preset.limit.toFixed(3)}</div>
+                    <div>{str.limitLabel} {activeLimit.toFixed(3)}</div>
                     <div>
                         {str.nLabel} {N ? <span className="text-amber-accent">{N}</span> : <span className="text-blue-accent">{str.notFound}</span>}
                     </div>
@@ -75,9 +104,9 @@ export default function EpsilonN() {
 
             <FunctionPlot width={PLOT_WIDTH} height={PLOT_HEIGHT} xMin={0} xMax={plotN + 1} yMin={yMin} yMax={yMax}>
                 {(scale) => {
-                    const bandTop = scale.toScreen(0, preset.limit + epsilon)
-                    const bandBottom = scale.toScreen(0, preset.limit - epsilon)
-                    const limitY = scale.toScreen(0, preset.limit)
+                    const bandTop = scale.toScreen(0, activeLimit + epsilon)
+                    const bandBottom = scale.toScreen(0, activeLimit - epsilon)
+                    const limitY = scale.toScreen(0, activeLimit)
                     const nLineX = N ? scale.toScreen(N, 0).x : null
 
                     return (
@@ -98,7 +127,7 @@ export default function EpsilonN() {
 
                             {points.map((p) => {
                                 const s = scale.toScreen(p.n, p.value)
-                                const within = Math.abs(p.value - preset.limit) < epsilon
+                                const within = Math.abs(p.value - activeLimit) < epsilon
                                 return (
                                     <circle key={p.n} cx={s.x} cy={s.y} r={3} fill={within ? 'var(--color-amber-accent)' : 'var(--color-ink-500)'} />
                                 )
