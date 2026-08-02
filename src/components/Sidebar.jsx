@@ -27,7 +27,7 @@ export default function Sidebar({ open, onClose }) {
                 <div className="flex items-center justify-between px-5 py-5 border-b border-ink-700">
                     <NavLink to="/" className="flex items-baseline gap-2" onClick={onClose}>
                         <span className="font-display italic text-xl text-amber-accent">∂</span>
-                        <span className="font-display text-lg tracking-tight">math companion</span>
+                        <span className="font-display text-lg tracking-tight">math visualizer</span>
                     </NavLink>
                     <button className="md:hidden text-ink-500 hover:text-text-strong" onClick={onClose} aria-label="Fermer">
                         <X size={20} />
