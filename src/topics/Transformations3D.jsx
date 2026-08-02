@@ -57,7 +57,7 @@ export default function Transformations3D() {
     }
 
     return (
-        <div className="flex flex-col md:flex-row gap-15 items-start">
+        <div className="flex flex-col md:flex-row gap-25 items-start">
             <div className="flex flex-col gap-7 w-full max-w-xs">
                 <Slider label={str.rotX} value={angleX} min={-180} max={180} step={1} onChange={setAngleX} />
                 <Slider label={str.rotY} value={angleY} min={-180} max={180} step={1} onChange={setAngleY} />
@@ -66,7 +66,7 @@ export default function Transformations3D() {
                 <Slider label={str.scaleY} value={sy} min={-2} max={2} step={0.1} onChange={setSy} />
                 <Slider label={str.scaleZ} value={sz} min={-2} max={2} step={0.1} onChange={setSz} />
 
-                <p className="text-xs text-ink-500 leading-relaxed">{str.help}</p>
+                <p className="text-xs text-ink-500 leading-relaxed mt-3">{str.help}</p>
             </div>
             <Scene3D width={420} height={420} build={build} />
         </div>

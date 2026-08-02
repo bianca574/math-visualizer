@@ -7,7 +7,7 @@ export const ui = {
       comingSoon: 'A venir',
       home: 'Accueil',
       tabs: ['Visualisation', 'Explication'],
-      heroKicker: 'L2 / L3 — Double cursus Info-Math',
+      heroKicker: 'L2 / L3 — Double cursus Math-Info',
       heroTitleA: 'Voir les maths ',
       heroTitleEm: 'bouger',
       heroSubtitle:
@@ -25,7 +25,7 @@ export const ui = {
       comingSoon: 'Coming soon',
       home: 'Home',
       tabs: ['Visualization', 'Explanation'],
-      heroKicker: 'L2 / L3 — Info-Math dual degree',
+      heroKicker: 'L2 / L3 — Math-Info dual degree',
       heroTitleA: 'Watch math ',
       heroTitleEm: 'move',
       heroSubtitle:

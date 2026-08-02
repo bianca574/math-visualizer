@@ -18,12 +18,12 @@ export default function Eigen() {
     const result = eigen2(numericMatrix)
 
     return (
-        <div className="flex flex-col md:flex-row gap-15 items-start">
+        <div className="flex flex-col md:flex-row gap-25 items-start">
             <div className="flex flex-col gap-4 max-w-xs">
                 <MatrixInput matrix={matrix} onChange={setMatrix} />
 
                 {result.real ? (
-                    <div className="font-mono text-sm text-ink-500 space-y-1">
+                    <div className="font-mono text-sm text-ink-500 space-y-1 mt-7">
                         <div>
                             λ₁ = <span className="text-amber-accent">{result.l1.toFixed(2)}</span>, v₁ = (
                             {result.v1.x.toFixed(2)}, {result.v1.y.toFixed(2)})
@@ -37,7 +37,7 @@ export default function Eigen() {
                     <p className="font-mono text-sm text-ink-500">{str.noReal}</p>
                 )}
 
-                <p className="text-xs text-ink-500 leading-relaxed">{str.help}</p>
+                <p className="text-xs text-ink-500 leading-relaxed mt-7">{str.help}</p>
             </div>
 
             <CoordinatePlane width={420} height={420}>

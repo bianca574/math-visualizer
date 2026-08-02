@@ -34,22 +34,22 @@ export default function Signature() {
     const curve = levelCurve(av, bv, cv)
 
     return (
-        <div className="flex flex-col md:flex-row gap-15 items-start">
+        <div className="flex flex-col md:flex-row gap-25 items-start">
             <div className="flex flex-col gap-3 w-full max-w-xs">
                 <div className="rounded-lg border border-ink-700 bg-ink-900 p-4 space-y-2">
-                    <p className="font-mono text-sm text-ink-500 mb-2">Q(x, y) = a·x² + 2b·xy + c·y²</p>
+                    <p className="font-mono text-sm text-ink-500 mb-5">Q(x, y) = a·x² + 2b·xy + c·y²</p>
                     <NumberField label="a" value={a} onChange={setA} />
                     <NumberField label="b" value={b} onChange={setB} />
                     <NumberField label="c" value={c} onChange={setC} />
                 </div>
-                <div className="font-mono text-xs text-ink-500 space-y-1">
+                <div className="font-mono text-xs text-ink-500 space-y-1 mt-7">
                     <div>λ₁ = {result.l1.toFixed(2)}, λ₂ = {result.l2.toFixed(2)}</div>
                     <div>
                         Signature : ({result.positives}, {result.negatives}) —{' '}
                         <span className="text-amber-accent">{result.label}</span>
                     </div>
                 </div>
-                <p className="text-xs text-ink-500 leading-relaxed">
+                <p className="text-xs text-ink-500 leading-relaxed mt-7">
                     {str.help}
                 </p>
             </div>

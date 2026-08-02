@@ -1,7 +1,7 @@
 export default function Slider({ label, value, min, max, step, onChange }) {
     return (
         <label className="block text-xs text-ink-500 font-mono">
-            <div className="flex justify-between mb-1">
+            <div className="flex justify-between mb-3">
                 <span>{label}</span>
                 <span className="text-text-primary">{value}</span>
             </div>

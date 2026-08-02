@@ -25,10 +25,10 @@ export default function DotProductProjection() {
     const angleDeg = cosTheta !== null ? (Math.acos(Math.max(-1, Math.min(1, cosTheta))) * 180) / Math.PI : null
 
     return (
-        <div className="flex flex-col md:flex-row gap-15 items-start">
+        <div className="flex flex-col md:flex-row gap-25 items-start">
             <div className="flex flex-col gap-3 w-full max-w-xs">
-                <p className="font-mono text-xs text-ink-500">{str.moveLabel}</p>
-                <div className="grid grid-cols-2 gap-3 rounded-lg border border-ink-700 bg-ink-900 p-3">
+                <p className="font-mono text-xs text-ink-500 mb-5">{str.moveLabel}</p>
+                <div className="grid grid-cols-2 gap-3 rounded-lg border border-ink-700 bg-ink-900 p-3 mb-7">
                     {[['ux', ux, setUx], ['uy', uy, setUy], ['vx', vx, setVx], ['vy', vy, setVy]].map(([label, val, setter]) => (
                         <label key={label} className="flex items-center gap-2 text-xs font-mono text-ink-500">
                             <span>{label}</span>
@@ -46,7 +46,7 @@ export default function DotProductProjection() {
                     <div>angle(u,v) = {angleDeg !== null ? `${angleDeg.toFixed(1)}°` : '—'}</div>
                     <div>proj_u(v) = ({p.x.toFixed(2)}, {p.y.toFixed(2)})</div>
                 </div>
-                <p className="text-xs text-ink-500 leading-relaxed">{str.help}</p>
+                <p className="text-xs text-ink-500 leading-relaxed mt-7">{str.help}</p>
             </div>
 
             <CoordinatePlane width={420} height={420}>

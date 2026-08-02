@@ -66,14 +66,14 @@ export default function CriticalPoints() {
     }
 
     return (
-        <div className="flex flex-col md:flex-row gap-15 items-start">
+        <div className="flex flex-col md:flex-row gap-25 items-start">
             <div className="flex flex-col gap-5 w-full max-w-xs">
                 <div className="rounded-lg border border-ink-700 bg-ink-900 p-4">
                     <InlineMath math={preset.latex} />
                 </div>
 
-                <label className="flex flex-col gap-3 text-xs font-mono text-ink-500">
-                    <span>{str.fnLabel}</span>
+                <label className="flex flex-col gap-3 text-xs font-mono text-ink-500 mt-3 mb-3">
+                    <span className="block mb-2">{str.fnLabel}</span>
                     <select
                         value={presetId}
                         onChange={(e) => {
@@ -112,7 +112,7 @@ export default function CriticalPoints() {
                 <Slider label="x" value={x} min={xMin} max={xMax} step={0.05} onChange={setX} />
                 <Slider label="y" value={y} min={yMin} max={yMax} step={0.05} onChange={setY} />
 
-                <div className="font-mono text-xs text-ink-500 space-y-1">
+                <div className="font-mono text-xs text-ink-500 space-y-1 mt-5 mb-5">
                     <div>∇f ≈ ({result.grad.fx.toFixed(2)}, {result.grad.fy.toFixed(2)})</div>
                     <div>fxx={result.hess.fxx.toFixed(2)}, fyy={result.hess.fyy.toFixed(2)}, fxy={result.hess.fxy.toFixed(2)}</div>
                     <div>D = fxx·fyy − fxy² = {result.D.toFixed(2)}</div>
@@ -123,7 +123,7 @@ export default function CriticalPoints() {
                 ) : (
                     <p className="font-mono text-xs text-ink-500 italic">{str.notCritical(gradMag.toFixed(2))}</p>
                 )}
-                <p className="text-xs text-ink-500 leading-relaxed">{str.help}</p>
+                <p className="text-xs text-ink-500 leading-relaxed mt-5">{str.help}</p>
             </div>
             <Scene3D width={420} height={420} build={build} />
         </div>

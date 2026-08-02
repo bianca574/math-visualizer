@@ -55,14 +55,14 @@ export default function FunctionSeries() {
 
     return (
         <div className="flex flex-col gap-6">
-            <div className="flex flex-col md:flex-row gap-15 items-start">
-                <div className="flex flex-col gap-7 w-full max-w-xs">
+            <div className="flex flex-col md:flex-row gap-25 items-start">
+                <div className="flex flex-col gap-7 w-full max-w-xs ">
                     <div className="rounded-lg border border-ink-700 bg-ink-900 p-4">
                         <InlineMath math={preset.latex} />
                     </div>
 
-                    <label className="flex flex-col gap-3 text-xs font-mono text-ink-500">
-                        <span>{str.fnLabel}</span>
+                    <label className="flex flex-col gap-3 text-xs font-mono text-ink-500 mt-3 mb-3">
+                        <span className="block mb-2">{str.fnLabel}</span>
                         <select
                             value={presetId}
                             onChange={(e) => {
@@ -114,18 +114,18 @@ export default function FunctionSeries() {
                         />
                     </label>
 
-                    <div className="font-mono text-xs text-ink-500 space-y-1">
+                    <div className="font-mono text-xs text-ink-500 space-y-1 mt-3 mb-3">
                         <div>sup|fₙ − f| ≈ {currentError.toFixed(3)}</div>
                         <div>
                             {preset.uniform ? (
-                                <span className="text-amber-accent">{str.uniform}</span>
+                                <span className="text-amber-accent block mt-3">{str.uniform}</span>
                             ) : (
-                                <span className="text-blue-accent">{str.nonUniform}</span>
+                                <span className="text-blue-accent block mt-3">{str.nonUniform}</span>
                             )}
                         </div>
                     </div>
 
-                    <p className="text-xs text-ink-500 leading-relaxed">{lang === 'en' ? preset.noteEn : preset.note}</p>
+                    <p className="text-xs text-ink-500 leading-relaxed mb-3">{lang === 'en' ? preset.noteEn : preset.note}</p>
                 </div>
 
                 <FunctionPlot width={MAIN_W} height={MAIN_H} xMin={a} xMax={b} yMin={preset.yRange[0]} yMax={preset.yRange[1]}>
@@ -154,7 +154,7 @@ export default function FunctionSeries() {
             </div>
 
             <div className="max-w-xl">
-                <p className="text-xs text-ink-500 mb-2">{str.errNote}</p>
+                <p className="text-xs text-ink-500 mb-5">{str.errNote}</p>
                 <FunctionPlot width={ERR_W} height={ERR_H} xMin={1} xMax={MAX_N} yMin={0} yMax={maxErr * 1.15}>
                     {(scale) => {
                         const path = errorCurve.map((p) => scale.toScreen(p.n, p.err))

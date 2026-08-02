@@ -70,14 +70,14 @@ export default function MultipleIntegrals() {
     }
 
     return (
-        <div className="flex flex-col md:flex-row gap-15 items-start">
+        <div className="flex flex-col md:flex-row gap-25 items-start">
             <div className="flex flex-col gap-7 w-full max-w-xs">
                 <div className="rounded-lg border border-ink-700 bg-ink-900 p-4">
                     <InlineMath math={preset.latex} />
                 </div>
 
-                <label className="flex flex-col gap-3 text-xs font-mono text-ink-500">
-                    <span>{str.fnLabel}</span>
+                <label className="flex flex-col gap-3 text-xs font-mono text-ink-500 mt-3 mb-3">
+                    <span className="block mb-2">{str.fnLabel}</span>
                     <select
                         value={presetId}
                         onChange={(e) => setPresetId(e.target.value)}
@@ -111,11 +111,11 @@ export default function MultipleIntegrals() {
 
                 <Slider label={str.subdivLabel} value={n} min={1} max={20} step={1} onChange={setN} />
 
-                <div className="font-mono text-xs text-ink-500 space-y-1">
+                <div className="font-mono text-xs text-ink-500 space-y-1 mt-3">
                     <div>{str.riemannLabel} <span className="text-amber-accent">{riemannSum.toFixed(4)}</span></div>
                     <div>{str.refLabel} <span className="text-blue-accent">{referenceValue.toFixed(4)}</span></div>
                 </div>
-                <p className="text-xs text-ink-500 leading-relaxed">{str.help}</p>
+                <p className="text-xs text-ink-500 leading-relaxed mt-3">{str.help}</p>
             </div>
             <Scene3D width={420} height={420} build={build} />
         </div>

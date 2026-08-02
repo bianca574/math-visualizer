@@ -29,6 +29,14 @@
   --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
 }
 
+.text-xs.text-ink-500.leading-relaxed {
+  font-size: 0.85rem;
+}
+
+.text-xs.font-mono.text-ink-500 {
+  font-size: 0.8rem;
+}
+
 ::-webkit-scrollbar {
   width: 10px;
   height: 10px;
@@ -55,10 +63,15 @@
   --color-ink-800: var(--color-paper-100);
   --color-ink-700: var(--color-paper-grid);
   --color-ink-600: #c7cdd6;
-  --color-ink-500: #5b6472;
+  --color-ink-500:  #404a57;
   --color-grid: var(--color-paper-grid);
   --color-text-primary: var(--color-paper-ink);
   --color-text-strong: #0f131a;
+  --color-amber-accent: #b5762a;
+  --color-amber-accent-soft: #c98f4a;
+  --color-blue-accent: #3a5ec4;
+  --color-blue-accent-soft: #5b7dd6;
+  --color-green-ok: #2f8f5b;
 }
 
 html {

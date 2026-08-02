@@ -22,9 +22,9 @@ export default function LinearForms() {
     const kernel = kernelLine(av, bv)
 
     return (
-        <div className="flex flex-col md:flex-row gap-15 items-start">
+        <div className="flex flex-col md:flex-row gap-25 items-start">
             <div className="flex flex-col gap-3 w-full max-w-xs">
-                <p className="font-mono text-xs text-ink-500">{str.coefficientsLabel}</p>
+                <p className="font-mono text-xs text-ink-500 mb-5">{str.coefficientsLabel}</p>
                 <div className="flex gap-3 rounded-lg border border-ink-700 bg-ink-900 p-3">
                     {[['a', a, setA], ['b', b, setB]].map(([label, val, setter]) => (
                         <label key={label} className="flex items-center gap-2 text-xs font-mono text-ink-500">
@@ -37,7 +37,7 @@ export default function LinearForms() {
                     ))}
                 </div>
 
-                <p className="font-mono text-xs text-ink-500">{str.pointLabel}</p>
+                <p className="font-mono text-xs text-ink-500 mt-3 mb-3">{str.pointLabel}</p>
                 <div className="flex gap-3 rounded-lg border border-ink-700 bg-ink-900 p-3">
                     {[['x', px, setPx], ['y', py, setPy]].map(([label, val, setter]) => (
                         <label key={label} className="flex items-center gap-2 text-xs font-mono text-ink-500">
@@ -50,10 +50,10 @@ export default function LinearForms() {
                     ))}
                 </div>
 
-                <div className="font-mono text-sm text-ink-500">
+                <div className="font-mono text-sm text-ink-500 mt-5">
                     φ(v) = <span className="text-amber-accent">{value.toFixed(2)}</span>
                 </div>
-                <p className="text-xs text-ink-500 leading-relaxed">{str.help}</p>
+                <p className="text-xs text-ink-500 leading-relaxed mt-5">{str.help}</p>
             </div>
 
             <CoordinatePlane width={420} height={420}>

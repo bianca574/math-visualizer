@@ -22,12 +22,12 @@ export default function SymmetricEndomorphisms() {
     const dotProduct = result.real ? dot(result.v1, result.v2) : null
 
     return (
-        <div className="flex flex-col md:flex-row gap-15 items-start">
+        <div className="flex flex-col md:flex-row gap-25 items-start">
             <div className="flex flex-col gap-3 w-full max-w-xs">
 
-                <p className="font-mono text-xs text-ink-500">{str.matrixNote}</p>
+                <p className="font-mono text-xs text-ink-500 mb-5">{str.matrixNote}</p>
 
-                <div className="flex gap-3 rounded-lg border border-ink-700 bg-ink-900 p-3">
+                <div className="flex gap-3 rounded-lg border border-ink-700 bg-ink-900 p-3 mb-7">
                     {[['a', a, setA], ['b', b, setB], ['c', c, setC]].map(([label, val, setter]) => (
                         <label key={label} className="flex items-center gap-2 text-xs font-mono text-ink-500">
                             <span>{label}</span>
@@ -49,7 +49,7 @@ export default function SymmetricEndomorphisms() {
                     <p className="font-mono text-xs text-ink-500">{str.unexpected}</p>
                 )}
 
-                <p className="text-xs text-ink-500 leading-relaxed">{str.help}</p>
+                <p className="text-xs text-ink-500 leading-relaxed mt-7">{str.help}</p>
             </div>
 
             <CoordinatePlane width={420} height={420}>

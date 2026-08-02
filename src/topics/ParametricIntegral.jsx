@@ -74,8 +74,8 @@ export default function ParametricIntegral() {
                         <InlineMath math={preset.integrandLatex} />
                     </div>
 
-                    <label className="flex flex-col gap-3 text-xs font-mono text-ink-500">
-                        <span>{str.integralLabel}</span>
+                    <label className="flex flex-col gap-3 text-xs font-mono text-ink-500 mt-3 mb-3">
+                        <span className="block mb-2">{str.integralLabel}</span>
                         <select
                             value={presetId}
                             onChange={(e) => {
@@ -140,10 +140,10 @@ export default function ParametricIntegral() {
                         />
                     </label>
 
-                    <div className="font-mono text-xs text-ink-500">
+                    <div className="font-mono text-xs text-ink-500 mt-3">
                         I({t.toFixed(2)}) ≈ <span className="text-amber-accent">{currentIntegral.toFixed(4)}</span>
                     </div>
-                    <p className="text-xs text-ink-500 leading-relaxed">{str.help}</p>
+                    <p className="text-xs text-ink-500 leading-relaxed mt-3 mb-3">{str.help}</p>
                 </div>
 
                 <div className="flex flex-col gap-4">

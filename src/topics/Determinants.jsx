@@ -53,16 +53,16 @@ export default function Determinants() {
     }
 
     return (
-        <div className="flex flex-col md:flex-row gap-15 items-start">
+        <div className="flex flex-col md:flex-row gap-25 items-start">
             <div className="flex flex-col gap-7 w-full max-w-xs">
                 <p className="text-xs text-ink-500 leading-relaxed">
                     {str.intro}
                 </p>
                 <MatrixInput matrix={matrix} onChange={setMatrix} />
-                <div className="font-mono text-sm">
+                <div className="font-mono text-sm mt-1">
                     det(M) = <span style={{ color: orientationVar }}>{determinant.toFixed(2)}</span>
                 </div>
-                <p className="text-xs text-ink-500 leading-relaxed">
+                <p className="text-xs text-ink-500 leading-relaxed mt-1">
                     {determinant < 0 ? str.negative : str.positive}
                 </p>
             </div>

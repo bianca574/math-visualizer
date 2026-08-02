@@ -31,10 +31,10 @@ export default function ConicsQuadrics() {
     const type = classifyConic(numeric.A, numeric.B, numeric.C, lang)
 
     return (
-        <div className="flex flex-col md:flex-row gap-15 items-start">
+        <div className="flex flex-col md:flex-row gap-25 items-start">
             <div className="flex flex-col gap-3 w-full max-w-xs">
-                <p className="font-mono text-xs text-ink-500">A·x² + B·xy + C·y² + D·x + E·y + F = 0</p>
-                <div className="grid grid-cols-3 gap-2 rounded-lg border border-ink-700 bg-ink-900 p-3">
+                <p className="font-mono text-xs text-ink-500 mb-5">A·x² + B·xy + C·y² + D·x + E·y + F = 0</p>
+                <div className="grid grid-cols-3 gap-2 rounded-lg border border-ink-700 bg-ink-900 p-3 mb-5">
                     {Object.entries(coeffs).map(([key, val]) => (
                         <NumberField key={key} label={key} value={val} onChange={(v) => setCoeffs((prev) => ({ ...prev, [key]: v }))} />
                     ))}
@@ -42,7 +42,7 @@ export default function ConicsQuadrics() {
                 <div className="font-mono text-sm">
                     {str.typeLabel} : <span className="text-amber-accent">{type}</span>
                 </div>
-                <p className="text-xs text-ink-500 leading-relaxed">{str.help}</p>
+                <p className="text-xs text-ink-500 leading-relaxed mt-7">{str.help}</p>
             </div>
 
             <CoordinatePlane width={420} height={420}>

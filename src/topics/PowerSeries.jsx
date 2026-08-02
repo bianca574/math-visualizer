@@ -46,14 +46,14 @@ export default function PowerSeries() {
     }
 
     return (
-        <div className="flex flex-col md:flex-row gap-15 items-start">
+        <div className="flex flex-col md:flex-row gap-25 items-start">
             <div className="flex flex-col gap-7 w-full max-w-xs">
                 <div className="rounded-lg border border-ink-700 bg-ink-900 p-4">
                     <InlineMath math={preset.latex} />
                 </div>
 
-                <label className="flex flex-col gap-3 text-xs font-mono text-ink-500">
-                    <span>{str.seriesLabel}</span>
+                <label className="flex flex-col gap-3 text-xs font-mono text-ink-500 mt-3 mb-3">
+                    <span className="block mb-2">{str.seriesLabel}</span>
                     <select
                         value={presetId}
                         onChange={(e) => {
@@ -77,7 +77,7 @@ export default function PowerSeries() {
 
                 <label className="block text-xs text-ink-500 font-mono">
                     <div className="flex justify-between mb-1">
-                        <span>{str.termsLabel}</span>
+                        <span className="block mb-2">{str.termsLabel}</span>
                         <span className="text-text-primary">{nTerms}</span>
                     </div>
                     <input
@@ -92,7 +92,7 @@ export default function PowerSeries() {
                 </label>
 
                 {activePreset.radius !== null && (
-                    <div className="font-mono text-xs text-ink-500">
+                    <div className="font-mono text-xs text-ink-500 mt-3">
                         {str.radiusLabel}{' '}
                         <span className="text-amber-accent">{activePreset.radius === Infinity ? '∞' : activePreset.radius}</span>
                     </div>
@@ -101,7 +101,7 @@ export default function PowerSeries() {
                 {preset.domainNote && (
                     <p className="text-xs text-ink-500 italic">{lang === 'en' ? preset.domainNoteEn : preset.domainNote}</p>
                 )}
-                <p className="text-xs text-ink-500 leading-relaxed">{str.help}</p>
+                <p className="text-xs text-ink-500 leading-relaxed mt-3">{str.help}</p>
             </div>
 
             <FunctionPlot width={PLOT_WIDTH} height={PLOT_HEIGHT} xMin={xMin} xMax={xMax} yMin={yMin} yMax={yMax}>

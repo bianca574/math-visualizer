@@ -30,13 +30,13 @@ export default function MatrixOps() {
     ]
 
     return (
-        <div className="flex flex-col md:flex-row gap-15 items-start">
+        <div className="flex flex-col md:flex-row gap-25 items-start">
             <div className="flex flex-col gap-4">
                 <MatrixInput matrix={matrix} onChange={setMatrix} />
-                <div className="font-mono text-sm text-ink-500">
+                <div className="font-mono text-sm text-ink-500 mt-5">
                     det(M) = <span style={{ color: orientationColor }}>{determinant.toFixed(2)}</span>
                 </div>
-                <p className="text-xs text-ink-500 max-w-xs leading-relaxed">
+                <p className="text-xs text-ink-500 max-w-xs leading-relaxed mt-5">
                     {determinant < 0 ? str.detNegative : str.detPositive}
                 </p>
             </div>

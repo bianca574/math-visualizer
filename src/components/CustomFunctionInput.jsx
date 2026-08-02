@@ -1,7 +1,7 @@
 export default function CustomFunctionInput({ label, placeholder, value, onChange, error }) {
     return (
-        <label className="flex flex-col gap-3 text-xs font-mono text-ink-500">
-            <span>{label}</span>
+        <label className="flex flex-col gap-3 text-xs font-mono text-ink-500 mt-3 mb-3 mt-3">
+            <span className="block mb-2 mt-3">{label}</span>
             <input
                 type="text"
                 value={value}

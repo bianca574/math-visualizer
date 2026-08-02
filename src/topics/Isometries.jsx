@@ -31,23 +31,23 @@ function View2D() {
     const sampleImage = applyMatrix(numeric, sample.x, sample.y)
 
     return (
-        <div className="flex flex-col md:flex-row gap-15 items-start">
+        <div className="flex flex-col md:flex-row gap-25 items-start">
             <div className="flex flex-col gap-3 w-full max-w-xs">
                 <MatrixInput matrix={matrix} onChange={setMatrix} />
                 {!result.orthogonal && (
-                    <p className="text-xs text-blue-accent">{str.notIsometry}</p>
+                    <p className="text-xs text-blue-accent mt-7">{str.notIsometry}</p>
                 )}
                 {result.orthogonal && result.type === 'rotation' && (
-                    <p className="font-mono text-sm text-ink-500">
+                    <p className="font-mono text-sm text-ink-500 mt-7">
                         <span className="text-amber-accent">{str.rotationOf}</span> {str.angleWord} {result.angleDeg.toFixed(1)}°
                     </p>
                 )}
                 {result.orthogonal && result.type === 'reflection' && (
-                    <p className="font-mono text-sm text-ink-500">
+                    <p className="font-mono text-sm text-ink-500 mt-7">
                         <span className="text-blue-accent">{str.reflectionOf}</span> {str.axisAt} {result.axisAngleDeg.toFixed(1)}° {str.ofHorizontal}
                     </p>
                 )}
-                <p className="text-xs text-ink-500 leading-relaxed">{str.help2D}</p>
+                <p className="text-xs text-ink-500 leading-relaxed mt-7">{str.help2D}</p>
             </div>
 
             <CoordinatePlane width={420} height={420}>
@@ -127,7 +127,7 @@ function View3D() {
     }
 
     return (
-        <div className="flex flex-col md:flex-row gap-15 items-start">
+        <div className="flex flex-col md:flex-row gap-25 items-start">
             <div className="flex flex-col gap-3 w-full max-w-xs">
                 <MatrixInput matrix={matrix} onChange={setMatrix} />
                 {!result.orthogonal && (
@@ -143,7 +143,7 @@ function View3D() {
                         <span className="text-blue-accent">{subtypeLabel[result.subtype]}</span> — {str.angleLabel} {result.angleDeg.toFixed(1)}°
                     </p>
                 )}
-                <p className="text-xs text-ink-500 leading-relaxed">{str.help3D}</p>
+                <p className="text-xs text-ink-500 leading-relaxed mt-7">{str.help3D}</p>
             </div>
             <Scene3D width={420} height={420} build={build} />
         </div>

@@ -48,16 +48,16 @@ export default function Transformations2D() {
     ]
 
     return (
-        <div className="flex flex-col md:flex-row gap-15 items-start">
+        <div className="flex flex-col md:flex-row gap-25 items-start">
             <div className="flex flex-col gap-7 w-full max-w-xs">
                 <Slider label={str.rotation} value={angle} min={-180} max={180} step={1} onChange={setAngle} />
                 <Slider label={str.scaleX} value={sx} min={-2} max={2} step={0.1} onChange={setSx} />
                 <Slider label={str.scaleY} value={sy} min={-2} max={2} step={0.1} onChange={setSy} />
                 <Slider label={str.shear} value={shear} min={-2} max={2} step={0.1} onChange={setShear} />
-                <div className="font-mono text-xs text-ink-500">
+                <div className="font-mono text-xs text-ink-500 mt-3">
                     M = [[{M[0][0].toFixed(2)}, {M[0][1].toFixed(2)}], [{M[1][0].toFixed(2)}, {M[1][1].toFixed(2)}]]
                 </div>
-                <div className="font-mono text-xs text-ink-500">
+                <div className="font-mono text-xs text-ink-500 mt-3">
                     det(M) = <span style={{ color: orientationColor }}>{determinant.toFixed(2)}</span>
                 </div>
             </div>
