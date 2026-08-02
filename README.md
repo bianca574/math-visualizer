@@ -44,13 +44,15 @@ Then open the local URL shown in your terminal (usually `http://localhost:5173`)
 
 ## Project Structure
 
+```
 src/
-├── components/ # shared UI: CoordinatePlane, FunctionPlot, Scene3D, Sidebar, Layout, Slider...
-├── context/ # LanguageContext (FR/EN)
-├── data/ # topics.js — single source of truth for the sidebar and home page
-├── lib/ # pure math logic: matrices, eigenvalues, quadratic forms, isometries, custom function parsing, UI strings
-├── pages/ # Home, TopicPage (routing shell)
-├── topics/ # one component per visualizer, registered in registry.js
+├── components/  # shared UI: CoordinatePlane, FunctionPlot, Scene3D, Sidebar, Layout, Slider...
+├── context/     # LanguageContext (FR/EN)
+├── data/        # topics.js — single source of truth for the sidebar and home page
+├── lib/         # pure math logic: matrices, eigenvalues, quadratic forms, isometries, custom function parsing, UI strings
+├── pages/       # Home, TopicPage (routing shell)
+├── topics/      # one component per visualizer, registered in registry.js
+```
 
 ## What I Learned
 
