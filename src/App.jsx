@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import { LanguageProvider } from './context/LanguageContext'
+import { LanguageProvider } from './context/LanguageProvider'
 import Layout from './components/Layout'
 import Home from './pages/Home'
 import TopicPage from './pages/TopicPage'
