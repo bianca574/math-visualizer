@@ -4,7 +4,7 @@ import { findTopic } from '../data/topics'
 import { topicComponents } from '../topics/registry'
 import { topicMeta } from '../topics/meta'
 import ExplanationText from '../components/ExplanationText'
-import { useLanguage } from '../context/LanguageContext'
+import { useLanguage } from '../context/useLanguage'
 import { ui } from '../lib/ui'
 
 export default function TopicPage() {

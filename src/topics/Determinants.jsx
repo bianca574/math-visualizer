@@ -2,7 +2,7 @@ import { useState } from 'react'
 import MatrixInput from '../components/MatrixInput'
 import Scene3D from '../components/Scene3D'
 import { det3, applyMatrix3 } from '../lib/matrix3'
-import { useLanguage } from '../context/LanguageContext'
+import { useLanguage } from '../context/useLanguage'
 import { topicStrings } from '../lib/topicStrings'
 
 const unitCubeEdges = [

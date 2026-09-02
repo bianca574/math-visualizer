@@ -2,7 +2,7 @@ import { useState } from 'react'
 import Scene3D from '../components/Scene3D'
 import Slider from '../components/Slider'
 import { rotX, rotY, rotZ, scale3, matMul3, applyMatrix3 } from '../lib/matrix3'
-import { useLanguage } from '../context/LanguageContext'
+import { useLanguage } from '../context/useLanguage'
 import { topicStrings } from '../lib/topicStrings'
 
 // the 12 edges of the unit cube [0,1]³, each as [x1,y1,z1, x2,y2,z2]

@@ -1,7 +1,7 @@
 import { categories } from '../data/topics'
 import TopicCard from '../components/TopicCard'
 import HeroVector from '../components/HeroVector'
-import { useLanguage } from '../context/LanguageContext'
+import { useLanguage } from '../context/useLanguage'
 import { ui } from '../lib/ui'
 
 export default function Home() {

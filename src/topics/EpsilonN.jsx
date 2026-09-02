@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react'
 import FunctionPlot from '../components/FunctionPlot'
 import { InlineMath } from '../components/Math'
 import { sequencePresets, findThresholdN } from '../lib/sequences'
-import { useLanguage } from '../context/LanguageContext'
+import { useLanguage } from '../context/useLanguage'
 import { topicStrings } from '../lib/topicStrings'
 import CustomFunctionInput from '../components/CustomFunctionInput'
 import { compileFunction } from '../lib/customFunction'
@@ -29,7 +29,7 @@ export default function EpsilonN() {
     const activeFn = customFn || preset.fn
     const activeLimit = customFn ? parseFloat(customLimit) || 0 : preset.limit
 
-    const N = useMemo(() => findThresholdN(activeFn, activeLimit, epsilon), [preset, epsilon, customExpr, customLimit])
+    const N = useMemo(() => findThresholdN(activeFn, activeLimit, epsilon), [epsilon, activeFn, activeLimit])
 
     const plotN = Math.max(PLOT_MIN_N, N ? N + 15 : PLOT_MIN_N)
     const points = []

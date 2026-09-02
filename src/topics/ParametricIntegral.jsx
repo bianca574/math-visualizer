@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react'
 import FunctionPlot from '../components/FunctionPlot'
 import { InlineMath } from '../components/Math'
 import { parametricIntegralPresets, integrate } from '../lib/parametricIntegral'
-import { useLanguage } from '../context/LanguageContext'
+import { useLanguage } from '../context/useLanguage'
 import { topicStrings } from '../lib/topicStrings'
 import CustomFunctionInput from '../components/CustomFunctionInput'
 import { compileFunction } from '../lib/customFunction'
@@ -33,7 +33,7 @@ export default function ParametricIntegral() {
     const { lang } = useLanguage()
     const str = topicStrings['parametric-integrals'][lang]
 
-    const currentIntegral = useMemo(() => integrate((x) => activeFn(x, t), a, b), [preset, t, a, b, customExpr])
+    const currentIntegral = useMemo(() => integrate((x) => activeFn(x, t), a, b), [t, a, b, activeFn])
 
     const integrandPoints = []
     for (let i = 0; i <= 200; i++) {
@@ -48,7 +48,7 @@ export default function ParametricIntegral() {
             pts.push({ t: tv, value: integrate((x) => activeFn(x, tv), a, b) })
         }
         return pts
-    }, [preset, tMin, tMax, a, b, customExpr])
+    }, [tMin, tMax, a, b, activeFn])
 
     const targetPoints = useMemo(() => {
 

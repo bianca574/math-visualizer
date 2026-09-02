@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import CoordinatePlane from '../components/CoordinatePlane'
 import { classifySignature, levelCurve } from '../lib/quadraticForm'
-import { useLanguage } from '../context/LanguageContext'
+import { useLanguage } from '../context/useLanguage'
 import { topicStrings } from '../lib/topicStrings'
 
 function NumberField({ label, value, onChange }) {

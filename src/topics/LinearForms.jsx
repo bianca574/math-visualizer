@@ -2,7 +2,7 @@ import { useState } from 'react'
 import CoordinatePlane from '../components/CoordinatePlane'
 import PlaneVector from '../components/PlaneVector'
 import { evalForm, kernelLine } from '../lib/linearForm'
-import { useLanguage } from '../context/LanguageContext'
+import { useLanguage } from '../context/useLanguage'
 import { topicStrings } from '../lib/topicStrings'
 
 export default function LinearForms() {

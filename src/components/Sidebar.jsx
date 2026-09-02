@@ -1,7 +1,7 @@
 import { NavLink } from 'react-router-dom'
 import { categories } from '../data/topics'
 import { X } from 'lucide-react'
-import { useLanguage } from '../context/LanguageContext'
+import { useLanguage } from '../context/useLanguage'
 import { ui } from '../lib/ui'
 
 export default function Sidebar({ open, onClose }) {

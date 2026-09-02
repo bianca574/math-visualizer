@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { BlockMath } from '../components/Math'
 import { gaussReductionSteps } from '../lib/gaussReduction'
-import { useLanguage } from '../context/LanguageContext'
+import { useLanguage } from '../context/useLanguage'
 
 export default function GaussReduction() {
     const [a, setA] = useState('1')

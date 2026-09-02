@@ -2,7 +2,7 @@ import { useState, useMemo } from 'react'
 import FunctionPlot from '../components/FunctionPlot'
 import { InlineMath } from '../components/Math'
 import { functionSeriesPresets, supError } from '../lib/functionSeries'
-import { useLanguage } from '../context/LanguageContext'
+import { useLanguage } from '../context/useLanguage'
 import { topicStrings } from '../lib/topicStrings'
 import CustomFunctionInput from '../components/CustomFunctionInput'
 import { compileFunction } from '../lib/customFunction'
@@ -29,8 +29,14 @@ export default function FunctionSeries() {
         ? compileFunction(customExpr, ['x', 'n'])
         : { fn: null, error: null }
 
-    const activeFn = customFn ? (x, nv) => customFn(x, nv) : preset.fn
-    const activeLimit = customFn ? (x) => customFn(x, 1000) : preset.limit
+    const activeFn = useMemo(
+        () => (customFn ? (x, nv) => customFn(x, nv) : preset.fn),
+        [customFn, preset],
+    )
+    const activeLimit = useMemo(
+        () => (customFn ? (x) => customFn(x, 1000) : preset.limit),
+        [customFn, preset],
+    )
     const [a, b] = customFn ? [parseFloat(domainA) || 0, parseFloat(domainB) || 1] : preset.domain
 
     const fnPoints = []
@@ -43,7 +49,10 @@ export default function FunctionSeries() {
         limitPoints.push({ x, y: activeLimit(x) })
     }
 
-    const activePreset = customFn ? { ...preset, fn: activeFn, limit: activeLimit, domain: [a, b] } : preset
+    const activePreset = useMemo(
+        () => (customFn ? { ...preset, fn: activeFn, limit: activeLimit, domain: [a, b] } : preset),
+        [preset, customFn, activeFn, activeLimit, a, b],
+    )
     const currentError = useMemo(() => supError(activePreset, n), [activePreset, n])
     const errorCurve = useMemo(() => {
         const pts = []

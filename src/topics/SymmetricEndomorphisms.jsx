@@ -3,7 +3,7 @@ import CoordinatePlane from '../components/CoordinatePlane'
 import PlaneVector from '../components/PlaneVector'
 import { eigen2 } from '../lib/eigen'
 import { dot } from '../lib/projection'
-import { useLanguage } from '../context/LanguageContext'
+import { useLanguage } from '../context/useLanguage'
 import { topicStrings } from '../lib/topicStrings'
 
 export default function SymmetricEndomorphisms() {
@@ -60,7 +60,6 @@ export default function SymmetricEndomorphisms() {
                     const l2a = transform.toScreen(-20 * result.v2.x, -20 * result.v2.y)
                     const l2b = transform.toScreen(20 * result.v2.x, 20 * result.v2.y)
 
-                    const markerSize = 14
                     const origin = transform.toScreen(0, 0)
                     const along1 = transform.toScreen(0.25 * result.v1.x, 0.25 * result.v1.y)
                     const along2 = transform.toScreen(0.25 * result.v2.x, 0.25 * result.v2.y)

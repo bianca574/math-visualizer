@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { Outlet } from 'react-router-dom'
 import { Menu, Sun, Moon, Languages } from 'lucide-react'
 import Sidebar from './Sidebar'
-import { useLanguage } from '../context/LanguageContext'
+import { useLanguage } from '../context/useLanguage'
 import { ui } from '../lib/ui'
 
 export default function Layout() {

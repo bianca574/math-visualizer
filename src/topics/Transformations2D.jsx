@@ -3,7 +3,7 @@ import CoordinatePlane from '../components/CoordinatePlane'
 import PlaneVector from '../components/PlaneVector'
 import { matMul2, applyMatrix, det2 } from '../lib/matrix'
 import Slider from '../components/Slider'
-import { useLanguage } from '../context/LanguageContext'
+import { useLanguage } from '../context/useLanguage'
 import { topicStrings } from '../lib/topicStrings'
 
 function rotationMatrix(deg) {

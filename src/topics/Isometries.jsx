@@ -6,7 +6,7 @@ import MatrixInput from '../components/MatrixInput'
 import { applyMatrix } from '../lib/matrix'
 import { applyMatrix3 } from '../lib/matrix3'
 import { classifyIsometry2, classifyIsometry3 } from '../lib/isometry'
-import { useLanguage } from '../context/LanguageContext'
+import { useLanguage } from '../context/useLanguage'
 import { topicStrings } from '../lib/topicStrings'
 
 const unitCubeEdges = [

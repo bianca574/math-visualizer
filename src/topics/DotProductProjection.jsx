@@ -2,7 +2,7 @@ import { useState } from 'react'
 import CoordinatePlane from '../components/CoordinatePlane'
 import PlaneVector from '../components/PlaneVector'
 import { dot, norm, projectOnto } from '../lib/projection'
-import { useLanguage } from '../context/LanguageContext'
+import { useLanguage } from '../context/useLanguage'
 import { topicStrings } from '../lib/topicStrings'
 
 export default function DotProductProjection() {
@@ -51,7 +51,6 @@ export default function DotProductProjection() {
 
             <CoordinatePlane width={420} height={420}>
                 {(transform) => {
-                    const uEnd = transform.toScreen(u.x, u.y)
                     const uLineStart = transform.toScreen(-u.x * 3, -u.y * 3)
                     const uLineEnd = transform.toScreen(u.x * 3, u.y * 3)
                     const vScreen = transform.toScreen(v.x, v.y)

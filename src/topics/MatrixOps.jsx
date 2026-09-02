@@ -3,7 +3,7 @@ import CoordinatePlane from '../components/CoordinatePlane'
 import PlaneVector from '../components/PlaneVector'
 import MatrixInput from '../components/MatrixInput'
 import { det2, applyMatrix } from '../lib/matrix'
-import { useLanguage } from '../context/LanguageContext'
+import { useLanguage } from '../context/useLanguage'
 import { topicStrings } from '../lib/topicStrings'
 
 export default function MatrixOps() {
