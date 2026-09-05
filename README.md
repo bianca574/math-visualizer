@@ -1,63 +1,61 @@
-# Math Visualizer (July-August 2026)
+# Math Visualizer (Juillet - Septembre 2026)
 
-An interactive visualization platform for undergraduate mathematics — linear algebra, Euclidean spaces, quadratic forms, sequences & series, and multivariable analysis — where every topic gets its own hands-on visualizer instead of a static explanation: drag a vector, edit a matrix, type your own function, and watch the math respond live.
+Plateforme de visualisation interactive pour les licences de math :
+algèbre linéaire, espaces euclidiens, formes quadratiques, suites et séries,
+et analyse à plusieurs variables. Chaque notion a sa propre visualisation
+manipulable plutôt qu'une explication statique.
 
-## Live Demo
+Démo en ligne : https://math-visualizer-orcin.vercel.app/
 
-[Link](https://math-visualizer-orcin.vercel.app/)
+## Documentation
 
-## Screenshots
+- DESIGN : choix d'architecture du projet
+- LICENSE : licence du projet
 
-![Home page](screenshots/home.png)
-![Determinants visualizer](screenshots/determinants.png)
-![Eigenvalues and eigenvectors](screenshots/eigenvalues.png)
+## Aperçu
 
-## Features
+![Accueil](screenshots/home.png)
+![Opérations sur les matrices](screenshots/matrix-ops.png)
+![Transformations 3D](screenshots/transformations-3d.png)
 
-- **18 interactive visualizers** across 5 categories — matrix operations, determinants, eigenvalues, linear forms, 2D/3D transformations, dot product & projection, symmetric endomorphisms, isometries, conics & quadrics, signature, Gauss reduction, ε-N convergence, function series, power series, parametric integrals, multiple integrals, and critical points.
-- **Custom input** — type your own sequence, series, or function instead of only picking from presets (parsed safely with mathjs, not `eval`), with adjustable domains where relevant.
-- **Bilingual** — a French/English toggle covers all site chrome and per-topic content.
-- **Light/dark theme**, entirely driven by CSS custom properties, so new components inherit it automatically without extra work.
-- **2D visuals** in hand-rolled SVG (a coordinate plane with pan/zoom, function plots); **3D visuals** in three.js (rotatable, zoomable scenes — transformations, determinants as volume, surfaces, gradient fields).
+## Stack technique
 
-## Built With
+- React + Vite
+- Tailwind CSS v4 (thème par variables CSS, sans fichier de config séparé)
+- React Router
+- three.js (scènes 3D)
+- KaTeX (rendu des formules)
+- mathjs (analyse sûre des fonctions saisies par l'utilisateur)
+- Vitest (tests)
+- GitHub Actions (lint, test, build)
+- Déployé sur Vercel
 
-- [React](https://react.dev/) — UI library, function components + hooks
-- [Vite](https://vitejs.dev/) — build tool / dev server
-- [React Router](https://reactrouter.com/) — client-side routing between topic pages
-- [Tailwind CSS v4](https://tailwindcss.com/) — utility styling with token-based theming (`@theme`, no separate config file)
-- [three.js](https://threejs.org/) — 3D scenes (transformations, surfaces, isosurfaces)
-- [KaTeX](https://katex.org/) — math formula rendering
-- [mathjs](https://mathjs.org/) — safe expression parsing for custom user input
-- [lucide-react](https://lucide.dev/) — icons
+## Lancer le projet en local
 
-## Running Locally
+Prérequis : Node 20+.
 
 ```bash
-git clone https://github.com/bianca574/math-visualizer
-cd math-visualizer
 npm install
 npm run dev
 ```
 
-Then open the local URL shown in your terminal (usually `http://localhost:5173`).
+Aucune variable d'environnement n'est nécessaire — l'application est
+entièrement côté client, sans backend.
 
-## Project Structure
+## Tests
 
-```
-src/
-├── components/  # shared UI: CoordinatePlane, FunctionPlot, Scene3D, Sidebar, Layout, Slider...
-├── context/     # LanguageContext (FR/EN)
-├── data/        # topics.js — single source of truth for the sidebar and home page
-├── lib/         # pure math logic: matrices, eigenvalues, quadratic forms, isometries, custom function parsing, UI strings
-├── pages/       # Home, TopicPage (routing shell)
-├── topics/      # one component per visualizer, registered in registry.js
+```bash
+npm run test
 ```
 
-## What I Learned
+## Build
 
-This project is built on what I picked up from my first one — components, hooks, routing — and pushed further into things I hadn't done before: designing a token-based theming system from scratch (CSS custom properties driving both Tailwind and raw SVG/three.js colors at once), building reusable rendering engines (a coordinate-plane component and a three.js scene wrapper that every visualizer reuses instead of duplicating setup code), and safely evaluating arbitrary user-typed math expressions with a parser instead of `eval`. Debugging cross-file consistency issues — a placeholder left in by mistake, a key mismatch between files — was also a real lesson in how far a single typo can cascade in a multi-file React app.
+```bash
+npm run build
+```
 
-## License
+## Lint
 
-All rights reserved.
+```bash
+npm run lint
+```
