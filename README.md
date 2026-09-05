@@ -15,8 +15,8 @@ Démo en ligne : https://math-visualizer-orcin.vercel.app/
 ## Aperçu
 
 ![Accueil](screenshots/home.png)
-![Opérations sur les matrices](screenshots/matrix-ops.png)
-![Transformations 3D](screenshots/transformations-3d.png)
+![Déterminants](screenshots/determinants.png)
+![Valeurs et vecteurs propres](screenshots/eigenvalues.png)
 
 ## Stack technique
 
