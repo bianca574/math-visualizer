@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { classifySignature } from '../src/lib/quadraticForm'
+import { classifySignature, levelCurve } from '../src/lib/quadraticForm'
 
 describe('classifySignature', () => {
     it('classifies a positive definite form', () => {
@@ -20,5 +20,22 @@ describe('classifySignature', () => {
     it('translates the label when lang is en', () => {
         const result = classifySignature(1, 0, 1, 'en')
         expect(result.label).toBe('positive definite')
+    })
+})
+
+describe('levelCurve', () => {
+    it('returns an ellipse for a positive definite form', () => {
+        const curve = levelCurve(1, 0, 1)
+        expect(curve.type).toBe('ellipse')
+        expect(curve.points.length).toBeGreaterThan(0)
+    })
+    it('returns a hyperbola for an indefinite form', () => {
+        const curve = levelCurve(1, 0, -1)
+        expect(curve.type).toBe('hyperbola')
+        expect(curve.branches.length).toBe(2)
+    })
+    it('returns degenerate for the zero form', () => {
+        const curve = levelCurve(0, 0, 0)
+        expect(curve.type).toBe('degenerate')
     })
 })
