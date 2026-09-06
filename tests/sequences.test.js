@@ -8,7 +8,7 @@ describe('findThresholdN', () => {
         expect(N).toBe(7)
     })
     it('returns null when no threshold is found within maxN', () => {
-        const N = findThresholdN((n) => 5, 0, 0.1, 50)
+        const N = findThresholdN(() => 5, 0, 0.1, 50)
         expect(N).toBeNull()
     })
 })
