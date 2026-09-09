@@ -3,7 +3,7 @@
 Plateforme de visualisation interactive pour les licences de math :
 algèbre linéaire, espaces euclidiens, formes quadratiques, suites et séries,
 et analyse à plusieurs variables. Chaque notion a sa propre visualisation
-manipulable plutôt qu'une explication statique.
+manipulable ainsi qu'une explication.
 
 Démo en ligne : https://math-visualizer-orcin.vercel.app/
 
